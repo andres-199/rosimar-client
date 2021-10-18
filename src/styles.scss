@@ -258,3 +258,8 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 table {
   width: 100%;
 }
+
+html,
+body {
+  height: 100%;
+}

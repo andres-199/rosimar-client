@@ -1,0 +1,49 @@
+<div class="container">
+  <mat-card class="login-card">
+    <mat-card-content class="login-card-content">
+      <img
+        class="login-card-header"
+        src="assets/img/login-card-header.png"
+        alt=""
+      />
+
+      <div class="login-card-inputs">
+        <form #loginForm="ngForm">
+          <mat-form-field class="full-width">
+            <mat-icon matPrefix style="margin-right: 1em; color: #5d7232"
+              >person_outline</mat-icon
+            >
+            <input
+              [(ngModel)]="username"
+              name="username"
+              placeholder="Usuario"
+              type="text"
+              matInput
+            />
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-icon matPrefix style="margin-right: 1em; color: #5d7232"
+              >lock</mat-icon
+            >
+            <input
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Contraseña"
+              type="password"
+              matInput
+            />
+          </mat-form-field>
+        </form>
+        <button
+          mat-flat-button
+          color="primary"
+          class="button"
+          (click)="onSubmit()"
+        >
+          INGRESAR
+        </button>
+        <button mat-button style="width: 100%">¿Perdiste tu contraseña?</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

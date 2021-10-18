@@ -1,0 +1,44 @@
+.container {
+  height: 100%;
+  background-image: url("../../assets/img/login-fondo.png");
+  background-size: cover;
+  margin: -2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  width: 450px;
+  background: #ffffffe5;
+  padding-bottom: 4em;
+}
+
+.login-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card-header {
+  width: 75%;
+  margin: 4em 0 !important;
+}
+
+.login-card-inputs {
+  width: 80%;
+}
+
+::ng-deep .mat-form-field-flex {
+  background-color: #ffffff;
+  border-radius: 5px;
+  border: 0.5px solid #a1a848;
+}
+
+.button {
+  width: 100%;
+  background: #a1a848 !important;
+  margin: 2em 0 !important;
+}
