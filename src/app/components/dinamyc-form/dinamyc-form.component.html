@@ -1,0 +1,87 @@
+<h1 mat-dialog-title>
+  {{ title }}
+  <i class="material-icons" *ngIf="isDelete"> warning </i>
+</h1>
+
+<div mat-dialog-content>
+  <ng-container *ngIf="!isDelete; else is_delete">
+    <div *ngFor="let field of formFields">
+      <ng-container
+        *ngTemplateOutlet="
+          field.type === 'textArea'
+            ? textArea
+            : field.type === 'dropdown'
+            ? dropdown
+            : input;
+          context: { $implicit: field }
+        "
+      ></ng-container>
+    </div>
+  </ng-container>
+</div>
+
+<!--actions-->
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Aceptar</button>
+</div>
+
+<!--templates-->
+<ng-template #datePicker let-field>
+  <mat-label>{{ field.label }}</mat-label>
+  <!--  <mat-form-field class="full-width">
+    <input
+      (click)="picker.open()"
+      (focus)="picker.open()"
+      [(ngModel)]="data[field.name]"
+      [matDatepicker]="picker"
+      [name]="field.name"
+      matInput
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field> -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #input let-field>
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      [type]="field.type || 'text'"
+      [name]="field.name"
+      [(ngModel)]="data[field.name]"
+      [placeholder]="field.label"
+    />
+  </mat-form-field>
+</ng-template>
+
+<ng-template #textArea let-field>
+  <mat-form-field class="full-width">
+    <textarea
+      matInput
+      [name]="field.name"
+      [(ngModel)]="data[field.name]"
+      [placeholder]="field.label"
+    ></textarea>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #dropdown let-field>
+  <mat-form-field class="full-width">
+    <mat-label>{{ field.label }}</mat-label>
+    <mat-select [(ngModel)]="data[field.name]">
+      <mat-option *ngFor="let option of field.options" [value]="option.value">{{
+        option.label
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #is_delete>
+  <span> Está seguro que desea eliminar el registro? </span>
+</ng-template>

@@ -1,0 +1,9 @@
+.image {
+  height: 70px;
+  padding: 7px;
+}
+
+.hover:hover {
+  background-color: #7955481f;
+  cursor: pointer;
+}

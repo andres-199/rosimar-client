@@ -1,0 +1,148 @@
+<div style="display: flex">
+  <div style="width: 50%">
+    <mat-form-field class="full-width">
+      <mat-label>Filtro</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input />
+    </mat-form-field>
+  </div>
+  <div style="width: 50%" align="right">
+    <button
+      mat-button
+      color="primary"
+      (click)="onRegister()"
+      matTooltip="Agregar un nuevo registro"
+      *ngIf="!hideCreate"
+    >
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </div>
+</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+    <!--template cols-->
+    <ng-container [matColumnDef]="col.field" *ngFor="let col of cols">
+      <th [width]="col.width" mat-header-cell *matHeaderCellDef>
+        {{ col.header }}
+      </th>
+      <td [width]="col.width" mat-cell *matCellDef="let data">
+        <ng-container *ngIf="!col.type; else templates">
+          {{ data[col.field] }}
+        </ng-container>
+
+        <ng-template #templates>
+          <ul *ngIf="col.type === 'list'">
+            <li *ngFor="let item of data[col.field]">{{ item }}</li>
+          </ul>
+
+          <ng-container *ngIf="col.type === 'image'">
+            <img
+              class="image"
+              [src]="image.path"
+              [alt]="image.nombre"
+              *ngFor="let image of data[col.field]"
+            />
+          </ng-container>
+
+          <p *ngIf="col.type === 'date'">
+            {{ data[col.field] | date: "EEEE, MMMM d, y, h:mm a" }}
+          </p>
+
+          <p *ngIf="col.type === 'money'">
+            {{ data[col.field] | currency: "COP":"symbol":"1.0" }}
+          </p>
+
+          <mat-chip-list *ngIf="col.type === 'chips'">
+            <mat-chip
+              selected
+              [color]="chip.color"
+              *ngFor="let chip of data[col.field]"
+            >
+              {{ chip.text }}
+            </mat-chip>
+          </mat-chip-list>
+
+          <mat-list *ngIf="col.type === 'payment-method'">
+            <mat-list-item>
+              <img
+                matListAvatar
+                style="border-radius: 0"
+                [src]="data[col.field].imagen"
+              />
+              <h3 matLine>{{ data[col.field].nombre }}</h3>
+            </mat-list-item>
+          </mat-list>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="options">
+      <th width="10%" mat-header-cell *matHeaderCellDef>OPCIONES</th>
+      <td width="10%" mat-cell *matCellDef="let data">
+        <!--menú de opciones-->
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          (click)="$event.stopPropagation()"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <!--...-->
+        <mat-menu #menu="matMenu">
+          <button
+            [disabled]="data.disableEdit"
+            mat-menu-item
+            (click)="onEdit(data)"
+            *ngIf="!hideEdit"
+          >
+            <mat-icon>edit</mat-icon>
+            <span>Editar</span>
+          </button>
+
+          <button
+            [disabled]="data.disableDelete"
+            mat-menu-item
+            (click)="onDelete(data)"
+            *ngIf="!hideDelete"
+          >
+            <mat-icon>delete</mat-icon>
+            <span>Eliminar</span>
+          </button>
+
+          <!--extra options-->
+          <ng-container *ngFor="let menuOption of menuOptions">
+            <button mat-menu-item (click)="menuOption.handler(data)">
+              <mat-icon>{{ menuOption.icon }}</mat-icon>
+              <span>{{ menuOption.label }}</span>
+            </button>
+          </ng-container>
+        </mat-menu>
+
+        <!--/menú de opciones-->
+      </td>
+    </ng-container>
+
+    <!--template rows-->
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr
+      [ngClass]="{ hover: activeHover }"
+      mat-row
+      *matRowDef="let myRowData; columns: columnsToDisplay"
+      (click)="onClickRow.emit(myRowData)"
+    ></tr>
+    <!--/template rows-->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell">
+        No hay datos que coincidan con "{{ input.value }}"
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    itemsPerPageLabel="Elementos"
+    [pageSizeOptions]="[10, 15, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
