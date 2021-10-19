@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-title> CATEGORÍAS </mat-card-title>
+
+  <mat-card-content>
+    <app-dinamyc-crud
+      [columnsToDisplay]="columnsToDisplay"
+      [cols]="cols"
+      [formFields]="formFields"
+      [origin]="origin"
+      (onLoadDataSource)="onLoadDataSource($event)"
+    >
+    </app-dinamyc-crud>
+  </mat-card-content>
+</mat-card>

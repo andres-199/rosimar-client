@@ -2,7 +2,7 @@
   <img src="assets/img/logo_encabezado.png" style="margin-left: 1em" />
 </mat-toolbar>
 
-<div style="padding: 2em; height: 100%">
+<div style="padding: 2em" [ngClass]="{ 'login-page-body': isLoginPage }">
   <router-outlet></router-outlet>
 </div>
 

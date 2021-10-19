@@ -42,8 +42,6 @@ export class UsersComponent implements OnInit {
         )
       )
       .subscribe((roles) => {
-        console.log(roles);
-
         const field: FormField = {
           name: 'rol_id',
           label: 'Rol',

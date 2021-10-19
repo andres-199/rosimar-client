@@ -44,6 +44,7 @@ export interface FormField {
   label: string;
   type?: 'text' | 'textArea' | 'dropdown' | 'date' | 'file' | 'number';
   options?: DropdownOption[];
+  hideIf?: { option: string; value: any };
 }
 
 export interface DropdownOption {

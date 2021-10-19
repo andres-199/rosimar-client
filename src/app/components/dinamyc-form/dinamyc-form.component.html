@@ -28,8 +28,9 @@
 
 <!--templates-->
 <ng-template #datePicker let-field>
-  <mat-label>{{ field.label }}</mat-label>
-  <!--  <mat-form-field class="full-width">
+  <ng-container *ngIf="data[field.hideIf?.option] !== field.hideIf?.value">
+    <mat-label>{{ field.label }}</mat-label>
+    <!--  <mat-form-field class="full-width">
     <input
       (click)="picker.open()"
       (focus)="picker.open()"
@@ -41,45 +42,54 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field> -->
-  <mat-form-field>
-    <input matInput [matDatepicker]="picker" placeholder="Choose a date" />
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Choose a date" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </ng-container>
 </ng-template>
 
 <ng-template #input let-field>
-  <mat-form-field class="full-width">
-    <input
-      matInput
-      [type]="field.type || 'text'"
-      [name]="field.name"
-      [(ngModel)]="data[field.name]"
-      [placeholder]="field.label"
-    />
-  </mat-form-field>
+  <ng-container *ngIf="data[field.hideIf?.option] !== field.hideIf?.value">
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        [type]="field.type || 'text'"
+        [name]="field.name"
+        [(ngModel)]="data[field.name]"
+        [placeholder]="field.label"
+      />
+    </mat-form-field>
+  </ng-container>
 </ng-template>
 
 <ng-template #textArea let-field>
-  <mat-form-field class="full-width">
-    <textarea
-      matInput
-      [name]="field.name"
-      [(ngModel)]="data[field.name]"
-      [placeholder]="field.label"
-    ></textarea>
-  </mat-form-field>
+  <ng-container *ngIf="data[field.hideIf?.option] !== field.hideIf?.value">
+    <mat-form-field class="full-width">
+      <textarea
+        matInput
+        [name]="field.name"
+        [(ngModel)]="data[field.name]"
+        [placeholder]="field.label"
+      ></textarea>
+    </mat-form-field>
+  </ng-container>
 </ng-template>
 
 <ng-template #dropdown let-field>
-  <mat-form-field class="full-width">
-    <mat-label>{{ field.label }}</mat-label>
-    <mat-select [(ngModel)]="data[field.name]">
-      <mat-option *ngFor="let option of field.options" [value]="option.value">{{
-        option.label
-      }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <ng-container *ngIf="data[field.hideIf?.option] !== field.hideIf?.value">
+    <mat-form-field class="full-width">
+      <mat-label>{{ field.label }}</mat-label>
+      <mat-select [(ngModel)]="data[field.name]">
+        <mat-option
+          *ngFor="let option of field.options"
+          [value]="option.value"
+          >{{ option.label }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
 </ng-template>
 
 <ng-template #is_delete>

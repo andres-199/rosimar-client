@@ -21,4 +21,8 @@ export class UsersService {
       password,
     });
   }
+
+  get token() {
+    return localStorage.getItem('access_token');
+  }
 }
