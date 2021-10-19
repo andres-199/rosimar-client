@@ -13,4 +13,12 @@ export class UsersService {
     const url = environment.BACKEND_URL + 'roles';
     return this.http.get<Rol[]>(url);
   }
+
+  login(username: string, password: string) {
+    const url = environment.BACKEND_URL + 'auth/login';
+    return this.http.post<{ access_token: string }>(url, {
+      username,
+      password,
+    });
+  }
 }
