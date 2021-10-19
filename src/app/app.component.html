@@ -1,6 +1,4 @@
-<mat-toolbar class="toolbar" color="primary" *ngIf="!isLoginPage">
-  <img src="assets/img/logo_encabezado.png" style="margin-left: 1em" />
-</mat-toolbar>
+<app-toolbar [isLoginPage]="isLoginPage"></app-toolbar>
 
 <div style="padding: 2em" [ngClass]="{ 'login-page-body': isLoginPage }">
   <router-outlet></router-outlet>

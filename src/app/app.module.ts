@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import AppRoutes from './app.routes';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/auth.interceptor';
+import { ToolbarModule } from './components/toolbar/toolbar.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { AuthInterceptor } from './shared/auth.interceptor';
       useHash: true,
     }),
     HttpClientModule,
+    ToolbarModule,
   ],
   providers: [
     {

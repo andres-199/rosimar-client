@@ -1,0 +1,18 @@
+<mat-toolbar class="toolbar" color="primary" *ngIf="!isLoginPage">
+  <img src="assets/img/logo_encabezado.png" style="margin-left: 1em" />
+  <div class="menu">
+    <button mat-button routerLink="categories" routerLinkActive="mat-accent">
+      Categorías
+    </button>
+    <button mat-button routerLink="products" routerLinkActive="mat-accent">
+      Productos
+    </button>
+    <button mat-button routerLink="users" routerLinkActive="mat-accent">
+      Usuarios
+    </button>
+    <button mat-button (click)="onClickExit()">
+      Salir
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

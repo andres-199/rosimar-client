@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Rol } from './interfaces/rol.interface';
 
@@ -7,7 +8,7 @@ import { Rol } from './interfaces/rol.interface';
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   get roles$() {
     const url = environment.BACKEND_URL + 'roles';
@@ -22,7 +23,16 @@ export class UsersService {
     });
   }
 
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['']);
+  }
+
   get token() {
     return localStorage.getItem('access_token');
+  }
+
+  get isLogedIn() {
+    return !!this.token;
   }
 }

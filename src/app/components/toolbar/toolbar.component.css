@@ -1,0 +1,19 @@
+.toolbar {
+  background-image: url("../../../assets/img/encabezado.png");
+  height: 80px;
+}
+
+button:hover {
+  background-color: #f9ab0033;
+}
+
+.menu {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0 2em;
+}
+
+button {
+  font-size: 0.9em;
+}

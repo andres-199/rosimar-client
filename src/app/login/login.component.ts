@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { UsersService } from '../users/users.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -28,6 +30,9 @@ export class LoginComponent implements OnInit {
       next: (res) => {
         if (res.access_token) {
           localStorage.setItem('access_token', res.access_token);
+          setTimeout(() => {
+            this.router.navigate(['']);
+          });
         }
       },
       error: (e) => {
