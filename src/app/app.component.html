@@ -1,13 +1,16 @@
 <app-toolbar [isLoginPage]="isLoginPage"></app-toolbar>
 
-<div style="padding: 2em" [ngClass]="{ 'login-page-body': isLoginPage }">
+<div
+  style="padding: 2em; min-height: calc(100% - 200px)"
+  [ngClass]="{ 'login-page-body': isLoginPage }"
+>
   <router-outlet></router-outlet>
 </div>
 
 <!--Footer-->
 <mat-toolbar
   color="primary"
-  style="position: absolute; bottom: 0; height: 122px"
+  style="height: 122px"
   [ngClass]="{ 'login-page-footer': isLoginPage }"
 >
   <div style="width: 100%" align="center">

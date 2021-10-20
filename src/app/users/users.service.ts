@@ -25,7 +25,9 @@ export class UsersService {
 
   logout() {
     localStorage.clear();
-    this.router.navigate(['']);
+    setTimeout(() => {
+      this.router.navigate(['home']);
+    });
   }
 
   get token() {

@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<div class="row">
+  <div class="col-6" *ngFor="let image of imagenes">
+    <mat-card>
+      <img mat-card-image [src]="image.path" [alt]="image.name" />
+      <mat-card-actions *ngIf="!image.is_empty">
+        <button
+          mat-button
+          class="full-width"
+          matTooltip="Eliminar"
+          color="primary"
+          (click)="deleteImage(image)"
+        >
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<mat-dialog-actions align="end">
+  <!--Add photo-->
+  <input
+    #image
+    type="file"
+    name="image"
+    accept="image/*"
+    hidden
+    (change)="onLoadImage($event)"
+  />
+  <button
+    [disabled]="iLoading"
+    (click)="image.click()"
+    class="full-width"
+    mat-button
+    color="primary"
+    matTooltip="Agregar imagen"
+  >
+    <mat-icon *ngIf="!iLoading; else loading">add_a_photo</mat-icon>
+    <ng-template #loading>
+      <div align="center">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+    </ng-template>
+  </button>
+  <!-------------->
+  <button
+    class="full-width"
+    mat-button
+    [mat-dialog-close]="originalImages"
+    cdkFocusInitial
+  >
+    Aceptar
+  </button>
+</mat-dialog-actions>

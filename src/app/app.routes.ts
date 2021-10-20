@@ -5,7 +5,7 @@ import { LogoutGuard } from './guards/logout.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'categories',
+    redirectTo: 'Home',
     pathMatch: 'full',
   },
   {
@@ -24,6 +24,16 @@ const routes: Routes = [
     path: 'categories',
     loadChildren: () =>
       import('./categories/categories.module').then((r) => r.CategoriesModule),
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then((r) => r.HomeModule),
+  },
+  {
+    path: 'products',
+    loadChildren: () =>
+      import('./products/products.module').then((r) => r.ProductsModule),
     canActivate: [LoginGuard],
   },
 ];

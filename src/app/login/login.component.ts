@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         if (res.access_token) {
           localStorage.setItem('access_token', res.access_token);
           setTimeout(() => {
-            this.router.navigate(['']);
+            this.router.navigate(['products']);
           });
         }
       },

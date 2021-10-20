@@ -1,5 +1,5 @@
-.container {
-  height: 100%;
+.contenedor {
+  height: 100vh;
   background-image: url("../../assets/img/login-fondo.png");
   background-size: cover;
   margin: -2em;

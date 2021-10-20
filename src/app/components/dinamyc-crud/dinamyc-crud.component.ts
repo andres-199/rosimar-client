@@ -56,6 +56,7 @@ export interface MenuOption {
   icon: string;
   label: string;
   handler: (data?: any) => any;
+  hideIf?: { option: string; value: any };
 }
 
 @Component({

@@ -113,7 +113,14 @@
 
           <!--extra options-->
           <ng-container *ngFor="let menuOption of menuOptions">
-            <button mat-menu-item (click)="menuOption.handler(data)">
+            <button
+              mat-menu-item
+              (click)="menuOption.handler(data)"
+              *ngIf="
+                data[menuOption.hideIf?.option || ''] !==
+                menuOption.hideIf?.value
+              "
+            >
               <mat-icon>{{ menuOption.icon }}</mat-icon>
               <span>{{ menuOption.label }}</span>
             </button>

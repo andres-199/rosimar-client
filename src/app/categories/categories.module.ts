@@ -4,6 +4,8 @@ import { CategoriesComponent } from './categories.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { DinamycCrudModule } from '../components/dinamyc-crud/dinamyc-crud.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ImagesModule } from '../components/images/images.module';
 
 const routes: Routes = [{ path: '', component: CategoriesComponent }];
 
@@ -14,6 +16,8 @@ const routes: Routes = [{ path: '', component: CategoriesComponent }];
     RouterModule.forChild(routes),
     MatCardModule,
     DinamycCrudModule,
+    MatDialogModule,
+    ImagesModule,
   ],
 })
 export class CategoriesModule {}

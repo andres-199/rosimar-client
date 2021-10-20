@@ -13,4 +13,9 @@ export class CategoriesService {
     const url = environment.BACKEND_URL + 'categories/primary';
     return this.http.get<Category[]>(url);
   }
+
+  update(category: Category) {
+    const url = environment.BACKEND_URL + 'categories';
+    return this.http.put<Category>(url, category);
+  }
 }
