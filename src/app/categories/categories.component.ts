@@ -93,7 +93,7 @@ export class CategoriesComponent implements OnInit {
   private onClickImages(category: Category) {
     const imagenes = category.images;
     const title = category.name;
-    const data = { imagenes, title };
+    const data = { imagenes, title, max: 2 };
 
     const dialogRef = this.dialog.open(ImagesComponent, {
       data,

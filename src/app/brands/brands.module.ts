@@ -1,21 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductsComponent } from './products.component';
+import { BrandsComponent } from './brands.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { DinamycCrudModule } from '../components/dinamyc-crud/dinamyc-crud.module';
-import { ImagesModule } from '../components/images/images.module';
 
-const routes: Routes = [{ path: '', component: ProductsComponent }];
+const routes: Routes = [{ path: '', component: BrandsComponent }];
 
 @NgModule({
-  declarations: [ProductsComponent],
+  declarations: [BrandsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     MatCardModule,
     DinamycCrudModule,
-    ImagesModule,
   ],
 })
-export class ProductsModule {}
+export class BrandsModule {}

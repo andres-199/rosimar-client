@@ -36,5 +36,17 @@ const routes: Routes = [
       import('./products/products.module').then((r) => r.ProductsModule),
     canActivate: [LoginGuard],
   },
+  {
+    path: 'offers',
+    loadChildren: () =>
+      import('./offers/offers.module').then((r) => r.OffersModule),
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'brands',
+    loadChildren: () =>
+      import('./brands/brands.module').then((r) => r.BrandsModule),
+    canActivate: [LoginGuard],
+  },
 ];
 export default routes;

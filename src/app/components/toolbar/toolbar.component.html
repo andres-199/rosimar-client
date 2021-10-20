@@ -1,11 +1,17 @@
 <mat-toolbar class="toolbar" color="primary" *ngIf="!isLoginPage">
   <img src="assets/img/logo_encabezado.png" style="margin-left: 1em" />
   <div class="menu">
+    <button mat-button routerLink="brands" routerLinkActive="mat-accent">
+      Marcas
+    </button>
     <button mat-button routerLink="categories" routerLinkActive="mat-accent">
       Categorías
     </button>
     <button mat-button routerLink="products" routerLinkActive="mat-accent">
       Productos
+    </button>
+    <button mat-button routerLink="offers" routerLinkActive="mat-accent">
+      Ofertas
     </button>
     <button mat-button routerLink="users" routerLinkActive="mat-accent">
       Usuarios
