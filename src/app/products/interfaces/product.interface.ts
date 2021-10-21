@@ -4,7 +4,7 @@ import { Brand } from './brand.interface';
 
 export interface Product {
   id?: number;
-  name?: string;
+  name: string;
   description?: string;
   brand_id?: number;
   category_id?: number;
