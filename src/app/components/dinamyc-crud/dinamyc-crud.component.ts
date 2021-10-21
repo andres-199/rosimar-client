@@ -45,6 +45,7 @@ export interface FormField {
   type?: 'text' | 'textArea' | 'dropdown' | 'date' | 'file' | 'number';
   options?: DropdownOption[];
   hideIf?: { option: string; value: any };
+  onChange?: (e: any) => void;
 }
 
 export interface DropdownOption {
@@ -96,6 +97,7 @@ export class DinamycCrudComponent implements OnInit {
 
   @Output() onLoadDataSource = new EventEmitter<any>();
   @Output() onClickRow = new EventEmitter<any>();
+  @Output() onClickEdit = new EventEmitter<any>();
 
   constructor(
     private dialog: MatDialog,

@@ -35,7 +35,7 @@ export class CategoriesComponent implements OnInit {
       type: 'dropdown',
       options: [
         { label: 'Primaria', value: true },
-        { label: 'Secundaria', value: false },
+        { label: 'Subcategoría', value: false },
       ],
     },
   ];
@@ -81,7 +81,7 @@ export class CategoriesComponent implements OnInit {
 
   onLoadDataSource(categories: Category[]) {
     categories = categories.map((category) => {
-      category.type = category.is_primary ? 'Primaria' : 'Secundaria';
+      category.type = category.is_primary ? 'Primaria' : 'Subcategoría';
       category.images = category.images?.map((img) => ({
         ...img,
         path: img.path?.replace('original', 'pequeno'),

@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CategoriesService } from '../categories/categories.service';
 import {
   Col,
   DinamycCrudComponent,
+  DropdownOption,
   FormField,
   MenuOption,
 } from '../components/dinamyc-crud/dinamyc-crud.component';
@@ -17,9 +21,17 @@ import { ProductsService } from './products.service';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
-  public columnsToDisplay = ['name', 'type', 'images', 'options'];
+  public columnsToDisplay = [
+    'Brand',
+    'Category',
+    'name',
+    'images',
+    'description',
+    'options',
+  ];
 
   public cols: Col[] = [
+    { header: 'MARCA', field: 'Brand' },
     { header: 'CATEGORÍA', field: 'Category' },
     { header: 'NOMBRE', field: 'name' },
     { header: 'DESCRIPCIÓN', field: 'description' },
@@ -28,15 +40,7 @@ export class ProductsComponent implements OnInit {
 
   public formFields: FormField[] = [
     { name: 'name', label: 'Nombre' },
-    {
-      name: 'is_primary',
-      label: 'Tipo de Categoría',
-      type: 'dropdown',
-      options: [
-        { label: 'Primaria', value: true },
-        { label: 'Secundaria', value: false },
-      ],
-    },
+    { name: 'description', label: 'Descripción', type: 'textArea' },
   ];
 
   public origin = 'products';
@@ -52,14 +56,86 @@ export class ProductsComponent implements OnInit {
   @ViewChild(DinamycCrudComponent) dinamycCrud?: DinamycCrudComponent;
   constructor(
     private dialog: MatDialog,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private categoriesService: CategoriesService
   ) {}
 
-  ngOnInit(): void {}
+  onClickEdit(product: Product) {
+    if (product.primary_category_id)
+      this.onSelectCategory(product.primary_category_id);
+  }
+
+  onSelectCategory(categoryId: number) {
+    this.categoriesService
+      .getSubCategories(categoryId)
+      .pipe(
+        map((categories) =>
+          categories.map<DropdownOption>((category) => ({
+            label: category.name,
+            value: category.id,
+          }))
+        )
+      )
+      .subscribe({
+        next: (categories) => {
+          const CategoryField: FormField = {
+            name: 'category_id',
+            type: 'dropdown',
+            options: categories,
+            label: 'Subcategoría',
+          };
+          const found = this.formFields.find(
+            (field) => field.name === 'category_id'
+          );
+          const deleteCount = found ? 1 : 0;
+          this.formFields.splice(2, deleteCount, CategoryField);
+        },
+      });
+  }
+
+  ngOnInit(): void {
+    const brands$ = this.productService.brands$.pipe(
+      map((brands) =>
+        brands.map<DropdownOption>((brand) => ({
+          label: brand.name,
+          value: brand.id,
+        }))
+      )
+    );
+
+    const categories$ = this.categoriesService.primaryCategories$.pipe(
+      map((categories) =>
+        categories.map<DropdownOption>((category) => ({
+          label: category.name,
+          value: category.id,
+        }))
+      )
+    );
+
+    forkJoin([brands$, categories$]).subscribe({
+      next: ([brands, categories]) => {
+        const brandField: FormField = {
+          name: 'brand_id',
+          type: 'dropdown',
+          options: brands,
+          label: 'Marca',
+        };
+        const CategoryField: FormField = {
+          name: 'primary_category_id',
+          type: 'dropdown',
+          options: categories,
+          label: 'Categoría Principal',
+          onChange: (categoryId) => this.onSelectCategory(categoryId),
+        };
+        this.formFields.unshift(brandField, CategoryField);
+      },
+    });
+  }
 
   onLoadDataSource(products: Product[]) {
     products = products.map((product) => {
       product.Category = product.Category?.name as any;
+      product.Brand = product.Brand?.name as any;
       product.images = product.images?.map((img) => ({
         ...img,
         path: img.path?.replace('original', 'pequeno'),
@@ -71,7 +147,7 @@ export class ProductsComponent implements OnInit {
   private onClickImages(product: Product) {
     const imagenes = product.images;
     const title = product.name;
-    const data = { imagenes, title };
+    const data = { imagenes, title, max: 1 };
 
     const dialogRef = this.dialog.open(ImagesComponent, {
       data,

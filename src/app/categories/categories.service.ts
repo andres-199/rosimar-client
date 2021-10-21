@@ -9,6 +9,11 @@ import { Category } from './interfaces/categoria.interface';
 export class CategoriesService {
   constructor(private http: HttpClient) {}
 
+  get categories$() {
+    const url = environment.BACKEND_URL + 'categories';
+    return this.http.get<Category[]>(url);
+  }
+
   get primaryCategories$() {
     const url = environment.BACKEND_URL + 'categories/primary';
     return this.http.get<Category[]>(url);
@@ -17,5 +22,11 @@ export class CategoriesService {
   update(category: Category) {
     const url = environment.BACKEND_URL + 'categories';
     return this.http.put<Category>(url, category);
+  }
+
+  getSubCategories(categoryId: number) {
+    const url =
+      environment.BACKEND_URL + `categories/${categoryId}/subcategories`;
+    return this.http.get<Category[]>(url);
   }
 }

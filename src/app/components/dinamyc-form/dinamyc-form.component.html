@@ -81,7 +81,10 @@
   <ng-container *ngIf="data[field.hideIf?.option] !== field.hideIf?.value">
     <mat-form-field class="full-width">
       <mat-label>{{ field.label }}</mat-label>
-      <mat-select [(ngModel)]="data[field.name]">
+      <mat-select
+        [(ngModel)]="data[field.name]"
+        (ngModelChange)="field.onChange(data[field.name])"
+      >
         <mat-option
           *ngFor="let option of field.options"
           [value]="option.value"

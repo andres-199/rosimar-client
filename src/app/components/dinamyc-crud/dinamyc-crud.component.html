@@ -94,7 +94,7 @@
           <button
             [disabled]="data.disableEdit"
             mat-menu-item
-            (click)="onEdit(data)"
+            (click)="onClickEdit.emit(data); onEdit(data)"
             *ngIf="!hideEdit"
           >
             <mat-icon>edit</mat-icon>
