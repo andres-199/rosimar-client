@@ -17,3 +17,10 @@ button:hover {
 button {
   font-size: 0.9em;
 }
+
+.toolbar-home {
+  background-image: url("../../../assets/img/encabezado.png");
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+}

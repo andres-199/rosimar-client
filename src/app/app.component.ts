@@ -9,6 +9,7 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   isLoginPage = false;
+  isAdminRoutes?: boolean;
   constructor(private router: Router) {}
 
   ngOnInit() {
@@ -17,6 +18,8 @@ export class AppComponent implements OnInit {
       .subscribe((e: any) => {
         this.isLoginPage =
           e.url.includes('login') || e.urlAfterRedirects.includes('login');
+        this.isAdminRoutes =
+          e.url.includes('admin') || e.urlAfterRedirects.includes('admin');
       });
   }
 }

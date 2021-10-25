@@ -26,7 +26,7 @@ export class LogoutGuard implements CanActivate {
     const isLogedIn = this.userService.isLogedIn;
 
     if (isLogedIn) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/admin/products']);
     }
 
     return !isLogedIn;

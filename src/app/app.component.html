@@ -1,4 +1,4 @@
-<app-toolbar [isLoginPage]="isLoginPage"></app-toolbar>
+<app-toolbar [isAdminRoutes]="isAdminRoutes" *ngIf="!isLoginPage"></app-toolbar>
 
 <div
   style="padding: 2em; min-height: calc(100% - 200px)"

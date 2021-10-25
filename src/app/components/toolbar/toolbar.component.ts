@@ -7,13 +7,16 @@ import { UsersService } from 'src/app/users/users.service';
   styleUrls: ['./toolbar.component.css'],
 })
 export class ToolbarComponent implements OnInit {
-  @Input() isLoginPage?: boolean;
-
+  isLogedIn?: boolean;
+  @Input() isAdminRoutes?: boolean;
   constructor(private userService: UsersService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isLogedIn = this.userService.isLogedIn;
+  }
 
   onClickExit() {
     this.userService.logout();
+    this.isLogedIn = false;
   }
 }
