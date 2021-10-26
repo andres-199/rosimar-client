@@ -6,16 +6,20 @@
     <div style="flex-grow: 1; display: flex">
       <div><span>SÍGUENOS</span></div>
       <div>
-        <img
-          src="../../../assets/img/fb.png"
-          style="margin-top: 2px; margin-left: 1em; cursor: pointer"
-        />
+        <a href="https://fb.com">
+          <img
+            src="assets/img/fb.png"
+            style="margin-top: 2px; margin-left: 1em"
+          />
+        </a>
       </div>
       <div>
-        <img
-          src="../../../assets/img/instagram.png"
-          style="width: 31px; height: 26px; margin-left: 1em; cursor: pointer"
-        />
+        <a href="https://instagram.com">
+          <img
+            src="assets/img/instagram.png"
+            style="width: 31px; height: 26px; margin-left: 1em"
+          />
+        </a>
       </div>
     </div>
     <div style="flex-grow: 1">
@@ -72,19 +76,27 @@
 <mat-toolbar class="toolbar" color="primary" *ngIf="isAdminRoutes">
   <img src="assets/img/logo_encabezado.png" style="margin-left: 1em" />
   <div class="menu">
-    <button mat-button routerLink="brands" routerLinkActive="mat-accent">
+    <button mat-button routerLink="admin/brands" routerLinkActive="mat-accent">
       Marcas
     </button>
-    <button mat-button routerLink="categories" routerLinkActive="mat-accent">
+    <button
+      mat-button
+      routerLink="admin/categories"
+      routerLinkActive="mat-accent"
+    >
       Categorías
     </button>
-    <button mat-button routerLink="products" routerLinkActive="mat-accent">
+    <button
+      mat-button
+      routerLink="admin/products"
+      routerLinkActive="mat-accent"
+    >
       Productos
     </button>
-    <button mat-button routerLink="offers" routerLinkActive="mat-accent">
+    <button mat-button routerLink="admin/offers" routerLinkActive="mat-accent">
       Ofertas
     </button>
-    <button mat-button routerLink="users" routerLinkActive="mat-accent">
+    <button mat-button routerLink="admin/users" routerLinkActive="mat-accent">
       Usuarios
     </button>
     <button mat-button (click)="onClickExit()" *ngIf="isLogedIn">

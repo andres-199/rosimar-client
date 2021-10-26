@@ -55,5 +55,12 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then((r) => r.HomeModule),
   },
+  {
+    path: 'products',
+    loadChildren: () =>
+      import('./public-products/public-products.module').then(
+        (r) => r.PublicProductsModule
+      ),
+  },
 ];
 export default routes;

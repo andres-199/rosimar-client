@@ -1,0 +1,37 @@
+.gif {
+  width: 100%;
+}
+
+.categories {
+  padding: 2em;
+}
+
+.title {
+  width: 100%;
+  font-weight: 700;
+  color: #716f6f;
+  margin-bottom: 0;
+}
+
+.editable {
+  width: 100%;
+  margin-top: 3em;
+}
+
+.static {
+  padding: 2em;
+  display: flex;
+  justify-content: space-around;
+}
+
+.banner {
+  padding: 2em 0;
+  max-width: 100%;
+}
+
+.contact {
+  display: flex;
+  justify-content: space-around;
+  min-height: 280px;
+  padding: 2em 0;
+}
