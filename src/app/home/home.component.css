@@ -23,15 +23,3 @@
   display: flex;
   justify-content: space-around;
 }
-
-.banner {
-  padding: 2em 0;
-  max-width: 100%;
-}
-
-.contact {
-  display: flex;
-  justify-content: space-around;
-  min-height: 280px;
-  padding: 2em 0;
-}

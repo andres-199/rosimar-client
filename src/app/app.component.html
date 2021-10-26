@@ -8,6 +8,105 @@
 </div>
 
 <!--Footer-->
+
+<ng-container *ngIf="!isLoginPage && !isAdminRoutes">
+  <!---------------------------------------banner------------------------------------------>
+  <div class="banner">
+    <img src="assets/img/banner.png" alt="" style="width: 100%" />
+  </div>
+
+  <!---------------------------------------contact------------------------------------------>
+  <div class="contact">
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <img src="assets/img/logo-rosimar-contact.png" />
+      <p style="font-size: 18px; font-weight: 300">Empresa Barranquillera</p>
+    </div>
+    <div style="width: 400px; display: flex; flex-direction: column">
+      <p style="color: #413c3c; font-weight: 700; font-size: 18px">
+        Horario de Atención
+      </p>
+      <p style="color: #413c3c; font-weight: 700; font-size: 18px; width: 100%">
+        <span>Lunes a Viernes</span>
+        <span style="float: right">8:00a.m.- 6:00p.m.</span>
+      </p>
+      <hr style="color: #000000; width: 100%" />
+      <p style="color: #413c3c; font-weight: 700; font-size: 18px">
+        <span>Sábado</span>
+        <span style="float: right"> 8:00a.m.- 1:00p.m. </span>
+      </p>
+      <hr style="color: #000000; width: 100%" />
+      <p style="margin-top: 1em">
+        <img src="assets/img/call.png" alt="" />
+        <span
+          style="
+            color: #413c3c;
+            font-weight: 300;
+            font-size: 18px;
+            margin-left: 2em;
+          "
+          >344 8116 / 344 8181</span
+        >
+      </p>
+      <p style="margin-top: 1em">
+        <img src="assets/img/whatsapp.png" alt="" />
+        <span
+          style="
+            color: #413c3c;
+            font-weight: 300;
+            font-size: 18px;
+            margin-left: 2em;
+          "
+          >315 734 9102 / 311 418 7869</span
+        >
+      </p>
+      <p style="margin-top: 1em">
+        <img src="assets/img/send.png" alt="" />
+        <span
+          style="
+            color: #413c3c;
+            font-weight: 300;
+            font-size: 18px;
+            margin-left: 2em;
+          "
+          >Cl 11 #39 -37 - Barranquilla (Atlantico)</span
+        >
+      </p>
+      <p style="margin-top: 1em">
+        <img src="assets/img/email.png" alt="" />
+        <span
+          style="
+            color: #413c3c;
+            font-weight: 300;
+            font-size: 18px;
+            margin-left: 2em;
+          "
+          >piladorarosimar@hotmail.com</span
+        >
+      </p>
+    </div>
+    <div>
+      <p
+        style="
+          color: #413c3c;
+          font-weight: 400;
+          font-size: 18px;
+          text-align: center;
+        "
+      >
+        Portafolio Movil
+      </p>
+      <img src="assets/img/catalogo-qr.png" alt="" />
+    </div>
+  </div>
+</ng-container>
+
 <mat-toolbar
   color="primary"
   style="height: 122px"
