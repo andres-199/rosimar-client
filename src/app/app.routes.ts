@@ -62,5 +62,17 @@ const routes: Routes = [
         (r) => r.PublicProductsModule
       ),
   },
+  {
+    path: 'categories',
+    loadChildren: () =>
+      import('./public-categories/public-categories.module').then(
+        (r) => r.PublicCategoriesModule
+      ),
+  },
+  {
+    path: 'company',
+    loadChildren: () =>
+      import('./company/company.module').then((r) => r.CompanyModule),
+  },
 ];
 export default routes;

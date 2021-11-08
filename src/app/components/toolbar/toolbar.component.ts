@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/users/users.service';
+
+declare var document: any;
 
 @Component({
   selector: 'app-toolbar',
@@ -18,5 +21,9 @@ export class ToolbarComponent implements OnInit {
   onClickExit() {
     this.userService.logout();
     this.isLogedIn = false;
+  }
+
+  onClickContact() {
+    document.querySelector('#contact').scrollIntoView();
   }
 }

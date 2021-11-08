@@ -1,6 +1,8 @@
 .toolbar {
   background-image: url("../../../assets/img/encabezado.png");
   height: 80px;
+  background-size: cover;
+    background-repeat: no-repeat;
 }
 
 button:hover {
@@ -23,4 +25,10 @@ button {
   height: 140px;
   display: flex;
   flex-direction: column;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.active {
+  color: #f8b323;
 }

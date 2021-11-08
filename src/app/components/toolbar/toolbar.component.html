@@ -1,7 +1,11 @@
 <mat-toolbar class="toolbar-home" color="primary" *ngIf="!isAdminRoutes">
   <div style="width: 100%; display: flex; padding-top: 1em">
     <div style="flex-grow: 4">
-      <img src="assets/img/logo_encabezado.png" style="margin-left: 1em" />
+      <img
+        routerLink
+        src="assets/img/logo_encabezado.png"
+        style="margin-left: 1em"
+      />
     </div>
     <div style="flex-grow: 1; display: flex">
       <div><span>SÍGUENOS</span></div>
@@ -23,7 +27,7 @@
       </div>
     </div>
     <div style="flex-grow: 1">
-      <button mat-button routerLink="home">
+      <button mat-button routerLink="home" routerLinkActive="active">
         <mat-icon>home</mat-icon>
         INICIO
       </button>
@@ -34,31 +38,30 @@
       style="margin-left: 2em; margin-right: 2em"
       mat-button
       routerLink="company"
-      routerLinkActive="mat-accent"
+      routerLinkActive="active"
     >
       TU EMPRESA
     </button>
     <button
       style="margin-left: 2em; margin-right: 2em"
       mat-button
-      routerLink="products"
-      routerLinkActive="mat-accent"
+      routerLink="categories"
+      routerLinkActive="active"
     >
       PRODUCTOS
     </button>
     <button
       style="margin-left: 2em; margin-right: 2em"
       mat-button
-      routerLink="offers"
-      routerLinkActive="mat-accent"
+      routerLink="products/offers"
+      routerLinkActive="active"
     >
       OFERTAS
     </button>
     <button
       style="margin-left: 2em; margin-right: 2em"
       mat-button
-      routerLink="contact"
-      routerLinkActive="mat-accent"
+      (click)="onClickContact()"
     >
       CONTÁCTENOS
     </button>
@@ -66,7 +69,7 @@
       style="margin-left: 2em; margin-right: 2em"
       mat-button
       routerLink="login"
-      routerLinkActive="mat-accent"
+      routerLinkActive="active"
     >
       INGRESAR
     </button>
@@ -74,29 +77,25 @@
 </mat-toolbar>
 
 <mat-toolbar class="toolbar" color="primary" *ngIf="isAdminRoutes">
-  <img src="assets/img/logo_encabezado.png" style="margin-left: 1em" />
+  <img
+    routerLink
+    src="assets/img/logo_encabezado.png"
+    style="margin-left: 1em"
+  />
   <div class="menu">
-    <button mat-button routerLink="admin/brands" routerLinkActive="mat-accent">
+    <button mat-button routerLink="admin/brands" routerLinkActive="active">
       Marcas
     </button>
-    <button
-      mat-button
-      routerLink="admin/categories"
-      routerLinkActive="mat-accent"
-    >
+    <button mat-button routerLink="admin/categories" routerLinkActive="active">
       Categorías
     </button>
-    <button
-      mat-button
-      routerLink="admin/products"
-      routerLinkActive="mat-accent"
-    >
+    <button mat-button routerLink="admin/products" routerLinkActive="active">
       Productos
     </button>
-    <button mat-button routerLink="admin/offers" routerLinkActive="mat-accent">
+    <button mat-button routerLink="admin/offers" routerLinkActive="active">
       Ofertas
     </button>
-    <button mat-button routerLink="admin/users" routerLinkActive="mat-accent">
+    <button mat-button routerLink="admin/users" routerLinkActive="active">
       Usuarios
     </button>
     <button mat-button (click)="onClickExit()" *ngIf="isLogedIn">
