@@ -1,0 +1,19 @@
+.category {
+  width: 100%;
+  min-height: 370px;
+  background-color: #979c44;
+  margin-bottom: 1em;
+  background-size: cover;
+  filter: brightness(0.5);
+}
+
+.right {
+  right: 5%;
+}
+.left {
+  left: 5%;
+}
+
+.brightness {
+  filter: brightness(0.75) !important;
+}

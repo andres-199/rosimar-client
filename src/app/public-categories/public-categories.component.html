@@ -1,1 +1,27 @@
-<p>public-categories works!</p>
+<div class="categories-container">
+  <div
+    *ngFor="let category of categories; let i = index"
+    style="width: 100%; min-height: 370px; position: relative"
+  >
+    <div
+      style="background-image: url('{{ getImagePath(category) }}');"
+      class="category"
+      [ngClass]="{ brightness: !getImagePath(category) }"
+    ></div>
+    <div
+      style="position: absolute; top: 45%; max-width: 30%; text-align: center"
+      [ngClass]="{ right: i % 2 === 0, left: !(i % 2 === 0) }"
+    >
+      <h1 style="color: #ffffff; font-size: 48px; font-weight: 700">
+        {{ category.name }}
+      </h1>
+      <button
+        style="color: #ffffff; border-color: #ffffff; border-radius: 30px"
+        mat-stroked-button
+        (click)="onClickCategory(category)"
+      >
+        Ver producto
+      </button>
+    </div>
+  </div>
+</div>
