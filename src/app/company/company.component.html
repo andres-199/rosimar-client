@@ -1,1 +1,70 @@
-<p>company works!</p>
+<div class="company-container">
+  <!---------------------------------------carousel------------------------------------------>
+  <div class="carousel" *ngIf="images.length">
+    <carousel
+      [images]="images"
+      cellWidth="100%"
+      [dots]="true"
+      [height]="370"
+      style="z-index: 0; max-height: 374px"
+      [objectFit]="'contain'"
+    >
+    </carousel>
+  </div>
+  <div style="margin-top: 3em; width: 75%; text-align: center">
+    <h1 style="color: #716f6f; font-weight: 700; font-size: 40px">
+      Líderes durante xx años
+    </h1>
+    <hr style="border: 2px solid #5d7232; width: 63px" />
+  </div>
+  <div style="margin-top: 2em; width: 75%">
+    <p style="color: #716f6f; font-size: 18px">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut
+      bibendum tortor, vitae suscipit nulla. Aliquam cursus libero tellus, non
+      gravida dui porttitor sollicitudin. Aenean non elementum sem. Suspendisse
+      aliquam finibus nibh, sit amet finibus mauris malesuada et. Suspendisse
+      mollis, nibh eu aliquet aliquet, sapien elit porttitor dolor, ac ornare.
+    </p>
+  </div>
+  <div class="cards-container">
+    <mat-card class="card" *ngIf="company">
+      <mat-card-title style="text-align: center">
+        <h1 class="card-title">Misión</h1>
+      </mat-card-title>
+      <mat-card-content class="card-content">
+        <p style="font-size: 18px; font-weight: 400">{{ company?.mision }}</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="card" *ngIf="company">
+      <mat-card-title style="text-align: center">
+        <h1 class="card-title">Visión</h1>
+      </mat-card-title>
+      <mat-card-content class="card-content">
+        <p style="font-size: 18px; font-weight: 400">{{ company?.vision }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div style="display: flex; margin-top: 3em; width: 100%" *ngIf="company">
+    <mat-card
+      style="border-radius: 0; width: 50%; min-height: 500px; padding: 3em"
+    >
+      <mat-card-title style="text-align: center">
+        <h1 class="card-title">Valores Coporporativos</h1>
+      </mat-card-title>
+      <mat-card-content class="card-content">
+        <p style="font-size: 18px; font-weight: 400">
+          {{ company?.corporate_values }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card
+      style="
+        border-radius: 0;
+        width: 50%;
+        min-height: 500px;
+        background-color: #f8b323;
+      "
+    >
+    </mat-card>
+  </div>
+</div>
