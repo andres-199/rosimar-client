@@ -40,4 +40,14 @@ export class ProductsService {
     const url = `${environment.BACKEND_URL}categories/${categoryId}/products/brands`;
     return this.http.get<Brand[]>(url);
   }
+
+  getPimaryCategory(productId: number) {
+    const url = `${environment.BACKEND_URL}products/${productId}/primary-category`;
+    return this.http.get<Category>(url);
+  }
+
+  getById(productId: number) {
+    const url = environment.BACKEND_URL + 'products/' + productId;
+    return this.http.get<Product>(url);
+  }
 }

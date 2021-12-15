@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriesService } from '../categories/categories.service';
 import { Category } from '../categories/interfaces/categoria.interface';
 import { Brand } from '../products/interfaces/brand.interface';
@@ -21,7 +21,8 @@ export class PublicProductsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private productsService: ProductsService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -89,7 +90,7 @@ export class PublicProductsComponent implements OnInit {
                 weight.unit === product.unit
             );
 
-            if (!found) {
+            if (!found && product.quantity) {
               this.weights.push({
                 quantity: product.quantity,
                 unit: product.unit,
@@ -108,5 +109,9 @@ export class PublicProductsComponent implements OnInit {
       }
     }
     return path;
+  }
+
+  onClickProduct(product: Product) {
+    this.router.navigate(['product', product.id]);
   }
 }

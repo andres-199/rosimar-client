@@ -4,6 +4,7 @@ import { CategoriesService } from '../categories/categories.service';
 import { Category } from '../categories/interfaces/categoria.interface';
 import { Imagen } from '../components/images/interfaces/imagen.interface';
 import { Offer } from '../offers/interfaces/offer.interface';
+import { Product } from '../products/interfaces/product.interface';
 import { HomeService } from './home.service';
 
 @Component({
@@ -42,5 +43,9 @@ export class HomeComponent implements OnInit {
 
   onClickCategory(category: Category) {
     this.router.navigate(['products', category.id]);
+  }
+
+  onClickProduct(product: Product) {
+    this.router.navigate(['product', product.id]);
   }
 }

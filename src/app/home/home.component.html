@@ -43,10 +43,7 @@
 
   <!---------------------------------------editable------------------------------------------>
   <div class="editable">
-    <img
-      src="../../assets/img/nuestros-productos.png"
-      style="width: 100%"
-    />
+    <img src="../../assets/img/nuestros-productos.png" style="width: 100%" />
   </div>
 
   <!--@TODO change for destacados-->
@@ -56,6 +53,7 @@
     <hr style="border: 2px solid #5d7232; width: 63px" />
     <div style="justify-content: space-around; display: flex; padding: 2em 0">
       <mat-card
+        (click)="onClickProduct(offer.Product)"
         style="width: 300px; height: 300px; cursor: pointer"
         [matTooltip]="offer.Product.name"
         *ngFor="let offer of offers"

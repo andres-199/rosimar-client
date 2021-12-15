@@ -36,7 +36,7 @@ export class ProductsComponent implements OnInit {
     { header: 'CATEGORÍA', field: 'Category' },
     { header: 'NOMBRE', field: 'name' },
     { header: 'PESO', field: 'weight', width: '10%' },
-    { header: 'DESCRIPCIÓN', field: 'description' },
+    { header: 'DESCRIPCIÓN', field: 'description', width: '20%' },
     { header: 'IMAGENES', field: 'images', type: 'image' },
   ];
 

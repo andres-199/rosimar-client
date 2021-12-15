@@ -1,0 +1,17 @@
+.category {
+  width: 100%;
+  min-height: 370px;
+  background-color: #979c44;
+  margin-bottom: 1em;
+  background-size: cover;
+  filter: brightness(0.5);
+}
+
+.brightness {
+  filter: brightness(0.75) !important;
+}
+
+.product-container {
+  display: flex;
+  padding: 4em;
+}
