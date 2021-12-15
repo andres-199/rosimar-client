@@ -1,1 +1,90 @@
-<p>public-products works!</p>
+<div
+  style="
+    width: calc(100% + 4em);
+    min-height: 370px;
+    position: relative;
+    margin: -2em -2em 2em -2em;
+  "
+  *ngIf="category"
+>
+  <div
+    style="background-image: url('{{ getImagePath(category) }}');"
+    class="category"
+    [ngClass]="{ brightness: !getImagePath(category) }"
+  ></div>
+  <div style="position: absolute; top: 45%; width: 100%; text-align: center">
+    <h1 style="color: #ffffff; font-size: 48px; font-weight: 700">
+      {{ category.name }}
+    </h1>
+    <p style="font-size: 18px; font-weight: 500px; color: #ffffff">
+      Inicio - {{ category.name }}
+    </p>
+  </div>
+</div>
+
+<div class="products-contaienr">
+  <div class="filter">
+    <p style="font-size: 18px; font-weight: 400">Opciones de productos</p>
+    <mat-divider></mat-divider>
+
+    <ng-container *ngIf="categories?.length">
+      <p style="font-size: 18px; font-weight: 500; margin-top: 43px">
+        Categoría
+      </p>
+      <mat-selection-list #categoryList>
+        <mat-list-option
+          checkboxPosition="before"
+          *ngFor="let category of categories"
+        >
+          {{ category.name }}
+        </mat-list-option>
+      </mat-selection-list>
+      <mat-divider></mat-divider>
+    </ng-container>
+
+    <ng-container *ngIf="brands?.length">
+      <p style="font-size: 18px; font-weight: 500; margin-top: 43px">Marca</p>
+      <mat-selection-list #brandList>
+        <mat-list-option checkboxPosition="before" *ngFor="let brand of brands">
+          {{ brand.name }}
+        </mat-list-option>
+      </mat-selection-list>
+      <mat-divider></mat-divider>
+    </ng-container>
+
+    <ng-container *ngIf="weights?.length">
+      <p style="font-size: 18px; font-weight: 500; margin-top: 43px">Peso</p>
+      <mat-selection-list #weightList>
+        <mat-list-option
+          checkboxPosition="before"
+          *ngFor="let weight of weights"
+        >
+          {{ weight.quantity }}{{ weight.unit }}
+        </mat-list-option>
+      </mat-selection-list>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </div>
+
+  <!--------carousel------->
+  <div class="carousel">
+    <mat-card
+      style="
+        width: 212px;
+        height: 248px;
+        padding: 22px;
+        text-align: center;
+        border-radius: 16px;
+        margin-left: 23px;
+      "
+      *ngFor="let product of products"
+    >
+      <img style="width: 96px; height: 145px" [src]="product.images[0].path" />
+      <mat-card-content>
+        <p style="font-size: 18px; margin-top: 22px">
+          {{ product.name }} {{ product.quantity }}{{ product.unit }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

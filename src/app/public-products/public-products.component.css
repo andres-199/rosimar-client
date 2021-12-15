@@ -1,0 +1,29 @@
+.products-contaienr {
+  display: flex;
+  margin-top: 4em;
+}
+
+.filter {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.carousel {
+  display: flex;
+  flex-grow: 3;
+  margin-left: 51px;
+}
+
+.category {
+  width: 100%;
+  min-height: 370px;
+  background-color: #979c44;
+  margin-bottom: 1em;
+  background-size: cover;
+  filter: brightness(0.5);
+}
+
+.brightness {
+  filter: brightness(0.75) !important;
+}

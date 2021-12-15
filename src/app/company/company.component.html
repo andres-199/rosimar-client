@@ -13,17 +13,22 @@
   </div>
   <div style="margin-top: 3em; width: 75%; text-align: center">
     <h1 style="color: #716f6f; font-weight: 700; font-size: 40px">
-      Líderes durante xx años
+      Reseña histórica
     </h1>
     <hr style="border: 2px solid #5d7232; width: 63px" />
   </div>
   <div style="margin-top: 2em; width: 75%">
     <p style="color: #716f6f; font-size: 18px">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut
-      bibendum tortor, vitae suscipit nulla. Aliquam cursus libero tellus, non
-      gravida dui porttitor sollicitudin. Aenean non elementum sem. Suspendisse
-      aliquam finibus nibh, sit amet finibus mauris malesuada et. Suspendisse
-      mollis, nibh eu aliquet aliquet, sapien elit porttitor dolor, ac ornare.
+      Distribuciones Rosimar s.a.s es una compañía familiar situada en la ciudad
+      de barranquilla dedicada a la distribución de productos de ganadería,
+      mascotas y maíz de consumo humano entre otros. Fue creada desde junio de
+      1992 con la plena convicción de ser la compañía N°1 en comercialización de
+      productos de ganadería mascotas y maíz de consumo humano en la región
+      caribe. Contamos con el mejor talento humano, infraestructura y logística
+      dispuesto para a atender todas tus necesidades y que tus pedidos lleguen a
+      tiempo para que puedas consentir a tus mascotas y darle la mejor
+      alimentación a tus crías de animales, solo contáctate con nosotros, con
+      gusto te atenderemos.
     </p>
   </div>
   <div class="cards-container">
@@ -52,9 +57,10 @@
         <h1 class="card-title">Valores Coporporativos</h1>
       </mat-card-title>
       <mat-card-content class="card-content">
-        <p style="font-size: 18px; font-weight: 400">
-          {{ company?.corporate_values }}
-        </p>
+        <p
+          style="font-size: 18px; font-weight: 400"
+          [innerHTML]="company?.corporate_values"
+        ></p>
       </mat-card-content>
     </mat-card>
     <mat-card

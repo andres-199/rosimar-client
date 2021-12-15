@@ -25,6 +25,7 @@ export class ProductsComponent implements OnInit {
     'Brand',
     'Category',
     'name',
+    'weight',
     'images',
     'description',
     'options',
@@ -34,12 +35,24 @@ export class ProductsComponent implements OnInit {
     { header: 'MARCA', field: 'Brand' },
     { header: 'CATEGORÍA', field: 'Category' },
     { header: 'NOMBRE', field: 'name' },
+    { header: 'PESO', field: 'weight', width: '10%' },
     { header: 'DESCRIPCIÓN', field: 'description' },
     { header: 'IMAGENES', field: 'images', type: 'image' },
   ];
 
   public formFields: FormField[] = [
     { name: 'name', label: 'Nombre' },
+    { name: 'quantity', label: 'Peso', type: 'number' },
+    {
+      name: 'unit',
+      label: 'Unidad de medida',
+      type: 'dropdown',
+      options: [
+        { label: 'kg', value: 'kg' },
+        { label: 'g', value: 'g' },
+        { label: 'mg', value: 'mg' },
+      ],
+    },
     { name: 'description', label: 'Descripción', type: 'textArea' },
   ];
 
@@ -140,6 +153,7 @@ export class ProductsComponent implements OnInit {
         ...img,
         path: img.path?.replace('original', 'pequeno'),
       }));
+      product.weight = `${product.quantity || ''} ${product.unit || ''}`;
       return product;
     });
   }

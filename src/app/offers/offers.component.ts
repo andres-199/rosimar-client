@@ -14,9 +14,12 @@ import { Offer } from './interfaces/offer.interface';
   styleUrls: ['./offers.component.css'],
 })
 export class OffersComponent implements OnInit {
-  public columnsToDisplay = ['Product', 'options'];
+  public columnsToDisplay = ['Product', 'images', 'options'];
 
-  public cols: Col[] = [{ header: 'PRODUCTO', field: 'Product' }];
+  public cols: Col[] = [
+    { header: 'PRODUCTO', field: 'Product' },
+    { header: 'IMAGENES', field: 'images', type: 'image' },
+  ];
 
   public formFields: FormField[] = [];
 
@@ -48,6 +51,10 @@ export class OffersComponent implements OnInit {
 
   onLoadDataSource(offers: Offer[]) {
     offers = offers.map((offer) => {
+      offer.images = offer.Product.images?.map((img) => ({
+        ...img,
+        path: img.path?.replace('original', 'pequeno'),
+      }));
       offer.Product = offer.Product?.name as any;
       return offer;
     });

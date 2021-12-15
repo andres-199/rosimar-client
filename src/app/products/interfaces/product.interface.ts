@@ -12,4 +12,7 @@ export interface Product {
   Category: Category;
   images: Imagen[];
   Brand?: Brand;
+  weight?: string;
+  quantity?: number;
+  unit?: string;
 }

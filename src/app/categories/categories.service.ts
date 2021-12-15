@@ -29,4 +29,9 @@ export class CategoriesService {
       environment.BACKEND_URL + `categories/${categoryId}/subcategories`;
     return this.http.get<Category[]>(url);
   }
+
+  getById(categoryId: number) {
+    const url = `${environment.BACKEND_URL}categories/${categoryId}`;
+    return this.http.get<Category>(url);
+  }
 }
