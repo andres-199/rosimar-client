@@ -50,4 +50,9 @@ export class ProductsService {
     const url = environment.BACKEND_URL + 'products/' + productId;
     return this.http.get<Product>(url);
   }
+
+  getProductsFiltered(categoryId: number, filter: object) {
+    const url = `${environment.BACKEND_URL}categories/${categoryId}/products`;
+    return this.http.post<Product[]>(url, filter);
+  }
 }

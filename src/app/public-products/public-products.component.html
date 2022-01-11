@@ -31,10 +31,11 @@
       <p style="font-size: 18px; font-weight: 500; margin-top: 43px">
         Categoría
       </p>
-      <mat-selection-list #categoryList>
+      <mat-selection-list #categoryList (selectionChange)="onSelectCategory()">
         <mat-list-option
           checkboxPosition="before"
           *ngFor="let category of categories"
+          [value]="category"
         >
           {{ category.name }}
         </mat-list-option>
@@ -44,8 +45,12 @@
 
     <ng-container *ngIf="brands?.length">
       <p style="font-size: 18px; font-weight: 500; margin-top: 43px">Marca</p>
-      <mat-selection-list #brandList>
-        <mat-list-option checkboxPosition="before" *ngFor="let brand of brands">
+      <mat-selection-list #brandList (selectionChange)="onSelectBrand()">
+        <mat-list-option
+          checkboxPosition="before"
+          *ngFor="let brand of brands"
+          [value]="brand"
+        >
           {{ brand.name }}
         </mat-list-option>
       </mat-selection-list>
@@ -54,10 +59,15 @@
 
     <ng-container *ngIf="weights?.length">
       <p style="font-size: 18px; font-weight: 500; margin-top: 43px">Peso</p>
-      <mat-selection-list #weightList>
+      <mat-selection-list
+        multiple="false"
+        #weightList
+        (selectionChange)="onSelectWeight()"
+      >
         <mat-list-option
           checkboxPosition="before"
           *ngFor="let weight of weights"
+          [value]="{ unit: weight.unit, quantity: weight.quantity }"
         >
           {{ weight.quantity }}{{ weight.unit }}
         </mat-list-option>
@@ -92,7 +102,6 @@
           <mat-card-content>
             <p style="font-size: 18px; margin-top: 22px">
               {{ product.name }} {{ product.quantity }}{{ product.unit }}
-              {{ i + " " + itemsPerPage * actualPage }}
             </p>
           </mat-card-content>
         </mat-card>
