@@ -22,4 +22,8 @@ export class AppComponent implements OnInit {
           e.url.includes('admin') || e.urlAfterRedirects.includes('admin');
       });
   }
+
+  onClickWhatsapp() {
+    window.location.href = `https://api.whatsapp.com/send?phone=+573157349102`;
+  }
 }

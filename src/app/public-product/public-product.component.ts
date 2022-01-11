@@ -54,4 +54,8 @@ export class PublicProductComponent implements OnInit {
   onClickProduct(product: Product) {
     this.router.navigate(['product', product.id]);
   }
+
+  onClickWhatsapp() {
+    window.location.href = `https://api.whatsapp.com/send?phone=+573157349102`;
+  }
 }

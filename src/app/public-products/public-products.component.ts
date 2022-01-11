@@ -130,6 +130,7 @@ export class PublicProductsComponent implements OnInit {
       .getProductsFiltered(this.categoryId as number, this.filter)
       .subscribe({
         next: (products) => {
+          this.actualPage = 1;
           this.products = products;
           this.createFilters();
         },
