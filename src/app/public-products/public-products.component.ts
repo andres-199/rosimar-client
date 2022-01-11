@@ -99,6 +99,12 @@ export class PublicProductsComponent implements OnInit {
               });
             }
           });
+          this.weights = this.weights.sort((a, b) => {
+            if (a.unit === b.unit) return (a.quantity || 0) - (b.quantity || 0);
+            if (a.unit === 'mg' && b.unit !== a.unit) return -1;
+            if (a.unit === 'g' && b.unit === 'kg') return -1;
+            return 1;
+          });
         },
       });
   }
