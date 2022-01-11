@@ -12,6 +12,8 @@ import { ProductsService } from '../products/products.service';
   styleUrls: ['./public-products.component.css'],
 })
 export class PublicProductsComponent implements OnInit {
+  itemsPerPage = 28;
+  actualPage = 1;
   categoryId?: any;
   categories?: Category[];
   products?: Product[];

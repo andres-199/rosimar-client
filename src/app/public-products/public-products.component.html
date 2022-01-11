@@ -67,25 +67,44 @@
   </div>
 
   <!--------carousel------->
-  <div class="carousel">
-    <mat-card
-      (click)="onClickProduct(product)"
-      style="
-        width: 212px;
-        height: 248px;
-        padding: 22px;
-        text-align: center;
-        border-radius: 16px;
-        margin-left: 23px;
-      "
-      *ngFor="let product of products"
-    >
-      <img style="width: 96px; height: 145px" [src]="product.images[0].path" />
-      <mat-card-content>
-        <p style="font-size: 18px; margin-top: 22px">
-          {{ product.name }} {{ product.quantity }}{{ product.unit }}
-        </p>
-      </mat-card-content>
-    </mat-card>
+  <div class="carousel-container">
+    <div class="carousel">
+      <ng-container *ngFor="let product of products; let i = index">
+        <mat-card
+          (click)="onClickProduct(product)"
+          style="
+            width: 228px;
+            height: 268px;
+            padding: 22px;
+            text-align: center;
+            border-radius: 16px;
+            margin: 23px;
+          "
+          *ngIf="
+            i < itemsPerPage * actualPage &&
+            i >= itemsPerPage * actualPage - itemsPerPage
+          "
+        >
+          <img
+            style="width: 96px; height: 145px"
+            [src]="product.images[0]?.path"
+          />
+          <mat-card-content>
+            <p style="font-size: 18px; margin-top: 22px">
+              {{ product.name }} {{ product.quantity }}{{ product.unit }}
+              {{ i + " " + itemsPerPage * actualPage }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+    </div>
+    <div style="width: 100%; margin-top: 2em" *ngIf="products">
+      <app-paginator
+        [totalItems]="products?.length"
+        [itemsPerPage]="itemsPerPage"
+        (onNext)="actualPage = $event"
+        *ngIf="products.length > itemsPerPage"
+      ></app-paginator>
+    </div>
   </div>
 </div>
