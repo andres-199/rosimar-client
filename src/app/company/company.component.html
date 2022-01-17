@@ -10,6 +10,18 @@
       [objectFit]="'contain'"
     >
     </carousel>
+    <button
+      color="primay"
+      mat-fab
+      style="position: absolute; top: 1em; right: 0.7em"
+      (click)="onClickAddimage()"
+      *ngIf="isLogedIn"
+    >
+      <mat-icon *ngIf="!loading; else loadingT">add_a_photo</mat-icon>
+      <ng-template #loadingT>
+        <mat-spinner diameter="24"></mat-spinner>
+      </ng-template>
+    </button>
   </div>
   <div style="margin-top: 3em; width: 75%; text-align: center">
     <h1 style="color: #716f6f; font-weight: 700; font-size: 40px">

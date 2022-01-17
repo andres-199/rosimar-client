@@ -14,4 +14,9 @@ export class CompanyService {
     const url = environment.BACKEND_URL + 'company';
     return this.http.get<Company[]>(url).pipe(map((companies) => companies[0]));
   }
+
+  update(company: Company) {
+    const url = environment.BACKEND_URL + 'company';
+    return this.http.put(url, company);
+  }
 }

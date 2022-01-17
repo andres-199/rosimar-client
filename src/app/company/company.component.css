@@ -8,6 +8,7 @@
 
 .carousel {
   width: 100%;
+  position: relative;
 }
 
 .card-title {
