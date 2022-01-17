@@ -1,18 +1,18 @@
 <mat-toolbar class="toolbar-home" color="primary" *ngIf="!isAdminRoutes">
   <div style="width: 100%; display: flex; padding-top: 1em">
-    <div style="flex-grow: 4">
+    <div style="flex-grow: 1">
       <img
         routerLink
-        src="assets/img/logo_encabezado.png"
-        style="margin-left: 1em"
+        src="assets/img/logo_encabezado.svg"
+        style="margin-left: 1em; max-width: 210px; max-height: 57px"
       />
     </div>
-    <div style="flex-grow: 1; display: flex">
+    <div style="flex-grow: 4; display: flex; justify-content: end">
       <div><span>SÍGUENOS</span></div>
       <div>
         <a href="https://web.facebook.com/rosimarbarranquilla">
           <img
-            src="assets/img/fb.png"
+            src="assets/img/facebook.svg"
             style="margin-top: 2px; margin-left: 1em"
           />
         </a>
@@ -20,14 +20,19 @@
       <div>
         <a href="https://www.instagram.com/distribucionesrosimar/?hl=es-la">
           <img
-            src="assets/img/instagram.png"
+            src="assets/img/instagram.svg"
             style="width: 31px; height: 26px; margin-left: 1em"
           />
         </a>
       </div>
     </div>
-    <div style="flex-grow: 1">
-      <button mat-button routerLink="home" routerLinkActive="active">
+    <div style="flex-grow: 1; justify-content: end">
+      <button
+        style="float: right; margin-top: -0.2em; margin-right: 1em"
+        mat-button
+        routerLink="home"
+        routerLinkActive="active"
+      >
         <mat-icon>home</mat-icon>
         INICIO
       </button>
@@ -79,8 +84,8 @@
 <mat-toolbar class="toolbar" color="primary" *ngIf="isAdminRoutes">
   <img
     routerLink
-    src="assets/img/logo_encabezado.png"
-    style="margin-left: 1em"
+    src="assets/img/logo_encabezado.svg"
+    style="margin-left: 1em; max-width: 210px; max-height: 57px"
   />
   <div class="menu">
     <button mat-button routerLink="admin/brands" routerLinkActive="active">

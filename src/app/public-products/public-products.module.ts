@@ -7,6 +7,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { PaginatorModule } from '../components/paginator/paginator.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ImagesModule } from '../components/images/images.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [
   { path: ':categoryId', component: PublicProductsComponent },
@@ -22,6 +26,10 @@ const routes: Routes = [
     MatDividerModule,
     MatIconModule,
     PaginatorModule,
+    MatButtonModule,
+    MatDialogModule,
+    ImagesModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class PublicProductsModule {}

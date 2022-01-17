@@ -14,6 +14,7 @@ export class ImagesComponent implements OnInit {
   title: string = '';
   iLoading = false;
   max = 4;
+  path?: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -24,6 +25,7 @@ export class ImagesComponent implements OnInit {
     this.imagenes = this.data.imagenes;
     this.title = this.data.title;
     this.max = this.data.max ? this.data.max : this.max;
+    this.path = this.data.path;
     this.validateImages();
   }
 
@@ -31,7 +33,7 @@ export class ImagesComponent implements OnInit {
     const files = e.target.files;
     if (files?.length) {
       this.iLoading = true;
-      this.imageService.uploadImg(files[0]).subscribe({
+      this.imageService.uploadImg(files[0], this.path).subscribe({
         next: (images) => {
           if (this.imagenes.length === this.max)
             this.deleteImage(this.imagenes[0]);

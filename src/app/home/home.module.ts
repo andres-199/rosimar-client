@@ -5,6 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ImagesModule } from '../components/images/images.module';
 
 const routes: Routes = [{ path: '', component: HomeComponent }];
 
@@ -16,6 +21,11 @@ const routes: Routes = [{ path: '', component: HomeComponent }];
     IvyCarouselModule,
     MatCardModule,
     MatTooltipModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatDialogModule,
+    ImagesModule,
   ],
 })
 export class HomeModule {}

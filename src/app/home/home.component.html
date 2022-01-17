@@ -2,6 +2,18 @@
   <!---------------------------------------gif------------------------------------------>
   <div class="gif" *ngIf="gif">
     <img [src]="gif?.path" style="width: 100%; max-height: 90px" />
+    <button
+      color="primay"
+      mat-fab
+      style="position: absolute; top: 0.3em; right: 0.3em"
+      (click)="onClickAddGif()"
+      *ngIf="isLogedIn"
+    >
+      <mat-icon *ngIf="!loadingGif; else loadingT">add_a_photo</mat-icon>
+      <ng-template #loadingT>
+        <mat-spinner diameter="24"></mat-spinner>
+      </ng-template>
+    </button>
   </div>
 
   <!---------------------------------------carousel------------------------------------------>
@@ -15,6 +27,18 @@
       [objectFit]="'contain'"
     >
     </carousel>
+    <button
+      color="primay"
+      mat-fab
+      style="position: absolute; top: 0.7em; right: 0.3em"
+      (click)="onClickAddBanner()"
+      *ngIf="isLogedIn"
+    >
+      <mat-icon *ngIf="!loadingBanner; else loadingT">add_a_photo</mat-icon>
+      <ng-template #loadingT>
+        <mat-spinner diameter="24"></mat-spinner>
+      </ng-template>
+    </button>
   </div>
 
   <!---------------------------------------categories------------------------------------------>
@@ -43,7 +67,22 @@
 
   <!---------------------------------------editable------------------------------------------>
   <div class="editable">
-    <img src="../../assets/img/nuestros-productos.png" style="width: 100%" />
+    <img
+      [src]="editable?.path || '../../assets/img/nuestros-productos.png'"
+      style="width: 100%"
+    />
+    <button
+      color="primay"
+      mat-fab
+      style="position: absolute; top: 0.5em; right: 0.5em"
+      (click)="onClickAddEditable()"
+      *ngIf="isLogedIn"
+    >
+      <mat-icon *ngIf="!loadingEditable; else loadingT">add_a_photo</mat-icon>
+      <ng-template #loadingT>
+        <mat-spinner diameter="24"></mat-spinner>
+      </ng-template>
+    </button>
   </div>
 
   <!--@TODO change for destacados-->

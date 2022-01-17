@@ -20,6 +20,18 @@
       Inicio - {{ category.name }}
     </p>
   </div>
+  <button
+    color="primay"
+    mat-fab
+    style="position: absolute; top: 1em; right: 1em"
+    (click)="onClickAddOfferImage()"
+    *ngIf="isLogedIn"
+  >
+    <mat-icon *ngIf="!loading; else loadingT">add_a_photo</mat-icon>
+    <ng-template #loadingT>
+      <mat-spinner diameter="24"></mat-spinner>
+    </ng-template>
+  </button>
 </div>
 
 <div class="products-contaienr">

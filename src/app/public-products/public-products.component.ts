@@ -1,11 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSelectionList } from '@angular/material/list';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriesService } from '../categories/categories.service';
 import { Category } from '../categories/interfaces/categoria.interface';
+import { ImagesComponent } from '../components/images/images.component';
+import { Imagen } from '../components/images/interfaces/imagen.interface';
 import { Brand } from '../products/interfaces/brand.interface';
 import { Product } from '../products/interfaces/product.interface';
 import { ProductsService } from '../products/products.service';
+import { ImagesService } from '../shared/images.service';
+import { UsersService } from '../users/users.service';
 
 @Component({
   selector: 'app-public-products',
@@ -26,6 +31,8 @@ export class PublicProductsComponent implements OnInit {
     brand?: number[];
     weight?: { unit: string; quantity: number }[];
   } = {};
+  isLogedIn = false;
+  loading = false;
 
   @ViewChild('categoryList') categoryList?: MatSelectionList;
   @ViewChild('brandList') brandList?: MatSelectionList;
@@ -34,12 +41,15 @@ export class PublicProductsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private productsService: ProductsService,
     private categoriesService: CategoriesService,
-    private router: Router
+    private router: Router,
+    private imageService: ImagesService,
+    private dialogRef: MatDialog,
+    private userService: UsersService
   ) {}
 
   ngOnInit(): void {
     this.categoryId = this.activatedRoute.snapshot.params.categoryId;
-
+    this.isLogedIn = this.userService.isLogedIn;
     if (this.categoryId === 'offers') this.getOffers();
     else this.getProducts();
 
@@ -80,7 +90,18 @@ export class PublicProductsComponent implements OnInit {
 
   private getCategory() {
     if (this.categoryId === 'offers') {
-      this.category = { name: 'Ofertas', images: [] };
+      this.category = { name: 'Ofertas', images: [{}] };
+      this.imageService.findOne('offers').subscribe({
+        next: (res) => {
+          this.loading = false;
+          if (res?.id) {
+            this.category?.images.push(res);
+          }
+        },
+        error: () => {
+          this.loading = false;
+        },
+      });
       return;
     }
     this.categoriesService.getById(this.categoryId as number).subscribe({
@@ -184,5 +205,53 @@ export class PublicProductsComponent implements OnInit {
 
   onClickProduct(product: Product) {
     this.router.navigate(['product', product.id]);
+  }
+
+  onClickAddOfferImage() {
+    this.loading = true;
+    let imageId: number;
+    let images;
+    if (this.category?.images)
+      if (this.category?.images.length > 1) {
+        images = [this.category?.images[1]];
+        imageId = images[0].id as number;
+      }
+
+    images = images || [];
+    const title = 'Ofertas';
+    const data = { imagenes: images, title, max: 1, path: 'upload' };
+
+    const dialogRef = this.dialogRef.open(ImagesComponent, {
+      data,
+      minWidth: '500px',
+      maxHeight: '700px',
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (images: Imagen[]) => {
+        if (!images) {
+          this.loading = false;
+          return;
+        }
+
+        const image = images[0] || {};
+        image.id = imageId;
+        image.name = 'offers';
+        const action = !images.length
+          ? 'delete'
+          : imageId
+          ? 'update'
+          : 'create';
+
+        this.imageService[action](image).subscribe({
+          next: (reponse) => {
+            this.getCategory();
+          },
+          error: () => {
+            this.loading = false;
+          },
+        });
+      },
+    });
   }
 }
