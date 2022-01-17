@@ -12,7 +12,23 @@
 <ng-container *ngIf="!isLoginPage && !isAdminRoutes">
   <!---------------------------------------banner------------------------------------------>
   <div class="banner">
-    <img src="assets/img/banner.png" alt="" style="width: 100%" />
+    <img
+      [src]="banner?.path || 'assets/img/banner.png'"
+      alt=""
+      style="width: 100%"
+    />
+    <button
+      color="primay"
+      mat-fab
+      style="position: absolute; top: 3em; right: 1em"
+      (click)="onClickAddBanner()"
+      *ngIf="isLogedIn"
+    >
+      <mat-icon *ngIf="!loadingBanner; else loadingT">add_a_photo</mat-icon>
+      <ng-template #loadingT>
+        <mat-spinner diameter="24"></mat-spinner>
+      </ng-template>
+    </button>
   </div>
 
   <!---------------------------------------contact------------------------------------------>
@@ -94,7 +110,7 @@
           >
         </p>
       </div>
-      <div>
+      <div style="position: relative">
         <p
           style="
             color: #413c3c;
@@ -105,7 +121,25 @@
         >
           Portafolio Movil
         </p>
-        <img src="assets/img/catalogo-qr.png" alt="" />
+        <img
+          [src]="catalogoQR?.path || 'assets/img/catalogo-qr.png'"
+          alt=""
+          style="max-width: 250px"
+        />
+        <button
+          color="primay"
+          mat-fab
+          style="position: absolute; top: 0; right: -1em"
+          (click)="onClickAddCatalogo()"
+          *ngIf="isLogedIn"
+        >
+          <mat-icon *ngIf="!loadingCatalogo; else loadingT"
+            >add_a_photo</mat-icon
+          >
+          <ng-template #loadingT>
+            <mat-spinner diameter="24"></mat-spinner>
+          </ng-template>
+        </button>
       </div>
     </div>
   </section>

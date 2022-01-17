@@ -9,6 +9,11 @@ import AppRoutes from './app.routes';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { ToolbarModule } from './components/toolbar/toolbar.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ImagesModule } from './components/images/images.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +27,11 @@ import { ToolbarModule } from './components/toolbar/toolbar.module';
     }),
     HttpClientModule,
     ToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    ImagesModule,
   ],
   providers: [
     {
