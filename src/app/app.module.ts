@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ImagesModule } from './components/images/images.module';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +34,8 @@ import { ImagesModule } from './components/images/images.module';
     MatProgressSpinnerModule,
     MatDialogModule,
     ImagesModule,
+    MatInputModule,
+    FormsModule,
   ],
   providers: [
     {

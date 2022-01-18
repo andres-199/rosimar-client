@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../categories/interfaces/categoria.interface';
+import { CompanyService } from '../company/company.service';
+import { Company } from '../company/interfaces/company.interface';
 import { Product } from '../products/interfaces/product.interface';
 import { ProductsService } from '../products/products.service';
 
@@ -13,10 +15,12 @@ export class PublicProductComponent implements OnInit {
   productId?: number;
   category?: Category;
   product?: Product;
+  whatsapp: string[] = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private productsService: ProductsService,
-    private router: Router
+    private router: Router,
+    private companyService: CompanyService
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +35,15 @@ export class PublicProductComponent implements OnInit {
       },
     });
     this.getCategory();
+    this.getCompany();
+  }
+
+  private getCompany() {
+    this.companyService.company$.subscribe({
+      next: (company) => {
+        this.whatsapp = company.whatsapp.split('/');
+      },
+    });
   }
 
   private getCategory() {

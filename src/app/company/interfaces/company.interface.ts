@@ -6,4 +6,10 @@ export interface Company {
   vision?: string;
   corporate_values?: string;
   images?: Imagen[];
+  monday_to_friday: string;
+  saturday: string;
+  phone: string;
+  whatsapp: string;
+  direction: string;
+  email: string;
 }

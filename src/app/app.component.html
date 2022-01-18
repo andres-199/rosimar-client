@@ -45,24 +45,82 @@
         <img src="assets/img/logo-rosimar-contact.png" />
         <p style="font-size: 18px; font-weight: 300">Empresa Barranquillera</p>
       </div>
-      <div style="width: 400px; display: flex; flex-direction: column">
+      <!-----------------------company---------------------------->
+      <div
+        style="
+          width: 400px;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+        "
+        *ngIf="company"
+      >
+        <button
+          color="primay"
+          mat-fab
+          style="position: absolute; top: -1.7em; right: -1em"
+          (click)="onCLickEdicCompany()"
+          *ngIf="isLogedIn && !showCompanyForm"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          color="success"
+          mat-fab
+          style="position: absolute; top: -1.7em; right: -1em"
+          (click)="onSubmit()"
+          *ngIf="showCompanyForm"
+        >
+          <mat-icon *ngIf="!loadingCatalogo; else loadingT">check</mat-icon>
+          <ng-template #loadingT>
+            <mat-spinner diameter="24"></mat-spinner>
+          </ng-template>
+        </button>
+
         <p style="color: #413c3c; font-weight: 700; font-size: 18px">
           Horario de Atención
         </p>
+
         <p
           style="color: #413c3c; font-weight: 700; font-size: 18px; width: 100%"
         >
           <span>Lunes a Viernes</span>
-          <span style="float: right">8:00a.m.- 6:00p.m.</span>
+          <span style="float: right" *ngIf="!showCompanyForm">{{
+            company.monday_to_friday
+          }}</span>
+
+          <mat-form-field *ngIf="showCompanyForm" style="float: right">
+            <input
+              matInput
+              name="monday_to_friday"
+              placeholder="Horario de atención"
+              [(ngModel)]="company.monday_to_friday"
+            />
+          </mat-form-field>
         </p>
         <hr style="color: #000000; width: 100%" />
+
         <p style="color: #413c3c; font-weight: 700; font-size: 18px">
           <span>Sábado</span>
-          <span style="float: right"> 8:00a.m.- 1:00p.m. </span>
+          <span style="float: right" *ngIf="!showCompanyForm">
+            {{ company.saturday }}
+          </span>
+          <mat-form-field *ngIf="showCompanyForm" style="float: right">
+            <input
+              matInput
+              name="saturday"
+              placeholder="Horario de atención"
+              [(ngModel)]="company.saturday"
+            />
+          </mat-form-field>
         </p>
         <hr style="color: #000000; width: 100%" />
-        <p style="margin-top: 1em">
-          <img src="assets/img/call.png" alt="" />
+        <div style="margin-top: 1em; display: flex">
+          <img
+            src="assets/img/call.png"
+            style="max-width: 22px; max-height: 22px"
+            alt=""
+          />
           <span
             style="
               color: #413c3c;
@@ -70,23 +128,73 @@
               font-size: 18px;
               margin-left: 2em;
             "
-            >344 8116 / 344 8181</span
+            *ngIf="!showCompanyForm"
+            >{{ company.phone }}</span
           >
-        </p>
-        <p style="margin-top: 1em" (click)="onClickWhatsapp()">
-          <img src="assets/img/whatsapp.png" alt="" />
+          <div style="margin-left: 1em" *ngIf="showCompanyForm">
+            <mat-form-field style="width: 40%">
+              <input
+                matInput
+                name="phone_1"
+                placeholder="Telefono"
+                [(ngModel)]="phone[0]"
+              />
+            </mat-form-field>
+            <span> / </span>
+            <mat-form-field style="width: 40%">
+              <input
+                matInput
+                name="phone_2"
+                placeholder="Telefono"
+                [(ngModel)]="phone[1]"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div style="margin-top: 1em; display: flex">
+          <img
+            src="assets/img/whatsapp.png"
+            style="max-width: 22px; max-height: 22px"
+            alt=""
+          />
           <span
+            (click)="onClickWhatsapp()"
             style="
               color: #413c3c;
               font-weight: 300;
               font-size: 18px;
               margin-left: 2em;
+              cursor: pointer;
             "
-            >315 734 9102 / 301 801 5990
+            *ngIf="!showCompanyForm"
+            >{{ company.whatsapp }}
           </span>
-        </p>
-        <p style="margin-top: 1em">
-          <img src="assets/img/send.png" alt="" />
+          <div style="margin-left: 1em" *ngIf="showCompanyForm">
+            <mat-form-field style="width: 40%">
+              <input
+                matInput
+                name="whatsapp_1"
+                placeholder="Whatsapp"
+                [(ngModel)]="whatsapp[0]"
+              />
+            </mat-form-field>
+            <span> / </span>
+            <mat-form-field style="width: 40%">
+              <input
+                matInput
+                name="whatsapp_2"
+                placeholder="Whatsapp"
+                [(ngModel)]="whatsapp[1]"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div style="margin-top: 1em">
+          <img
+            src="assets/img/send.png"
+            style="max-width: 22px; max-height: 22px"
+            alt=""
+          />
           <span
             style="
               color: #413c3c;
@@ -94,11 +202,27 @@
               font-size: 18px;
               margin-left: 2em;
             "
-            >Cl 11 #39 -37 - Barranquilla (Atlantico)</span
+            *ngIf="!showCompanyForm"
+            >{{ company.direction }}</span
           >
-        </p>
-        <p style="margin-top: 1em">
-          <img src="assets/img/email.png" alt="" />
+          <mat-form-field
+            style="margin-left: 1.5em; width: 80%"
+            *ngIf="showCompanyForm"
+          >
+            <input
+              matInput
+              name="direction"
+              placeholder="Dirección"
+              [(ngModel)]="company.direction"
+            />
+          </mat-form-field>
+        </div>
+        <div style="margin-top: 1em">
+          <img
+            src="assets/img/email.png"
+            style="max-width: 22px; max-height: 22px"
+            alt=""
+          />
           <span
             style="
               color: #413c3c;
@@ -106,10 +230,23 @@
               font-size: 18px;
               margin-left: 2em;
             "
-            >piladorarosimar@hotmail.com</span
+            *ngIf="!showCompanyForm"
+            >{{ company.email }}</span
           >
-        </p>
+          <mat-form-field
+            style="margin-left: 1.5em; width: 80%"
+            *ngIf="showCompanyForm"
+          >
+            <input
+              matInput
+              name="email"
+              placeholder="Correo"
+              [(ngModel)]="company.email"
+            />
+          </mat-form-field>
+        </div>
       </div>
+      <!-------------portafolio QR--------------->
       <div style="position: relative">
         <p
           style="

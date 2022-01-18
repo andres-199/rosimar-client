@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { CompanyService } from './company/company.service';
+import { Company } from './company/interfaces/company.interface';
 import { ImagesComponent } from './components/images/images.component';
 import { Imagen } from './components/images/interfaces/imagen.interface';
 import { HomeService } from './home/home.service';
@@ -21,18 +23,27 @@ export class AppComponent implements OnInit {
   catalogoQR?: Imagen;
   loadingCatalogo = false;
   isLogedIn = false;
+
+  company?: Company;
+  phone: string[] = [];
+  whatsapp: string[] = [];
+  showCompanyForm = false;
+  loadingCompany = false;
+
   constructor(
     private router: Router,
     private homeService: HomeService,
     private dialogRef: MatDialog,
     private imageService: ImagesService,
-    private userService: UsersService
+    private userService: UsersService,
+    private companyService: CompanyService
   ) {}
 
   ngOnInit() {
     this.isLogedIn = this.userService.isLogedIn;
     this.getBanner();
     this.getCatalogo();
+    this.getCompany();
     this.router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
       .subscribe((e: any) => {
@@ -41,6 +52,20 @@ export class AppComponent implements OnInit {
         this.isAdminRoutes =
           e.url.includes('admin') || e.urlAfterRedirects.includes('admin');
       });
+  }
+
+  private getCompany() {
+    this.companyService.company$.subscribe({
+      next: (company) => {
+        this.company = company;
+        this.phone = company.phone.split('/');
+        this.whatsapp = company.whatsapp.split('/');
+        this.loadingCompany = false;
+      },
+      error: (e) => {
+        this.loadingCompany = false;
+      },
+    });
   }
 
   private getBanner() {
@@ -68,7 +93,7 @@ export class AppComponent implements OnInit {
   }
 
   onClickWhatsapp() {
-    window.location.href = `https://api.whatsapp.com/send?phone=+573157349102`;
+    window.location.href = `https://api.whatsapp.com/send?phone=+57${this.whatsapp[0]}`;
   }
 
   onClickAddBanner() {
@@ -165,5 +190,28 @@ export class AppComponent implements OnInit {
         });
       },
     });
+  }
+
+  onCLickEdicCompany() {
+    this.showCompanyForm = true;
+  }
+
+  onSubmit() {
+    this.showCompanyForm = false;
+    this.loadingCompany = true;
+    if (this.company) {
+      this.company.phone = `${this.phone[0] || ''} / ${this.phone[1] || ''}`;
+      this.company.whatsapp = `${this.whatsapp[0] || ''} / ${
+        this.whatsapp[1] || ''
+      }`;
+      this.companyService.update(this.company).subscribe({
+        next: (response) => {
+          this.getCompany();
+        },
+        error: (e) => {
+          this.loadingCompany = false;
+        },
+      });
+    }
   }
 }
