@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  BACKEND_URL: 'http://localhost:3000/',
+  BACKEND_URL: 'https://rosimar.com.co:3000/',
   STORAGE_URL: 'https://rosimar.com.co:3600/',
 };
 

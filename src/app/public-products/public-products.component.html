@@ -123,7 +123,7 @@
       <app-paginator
         [totalItems]="products?.length"
         [itemsPerPage]="itemsPerPage"
-        (onNext)="actualPage = $event"
+        (onNext)="onPaginate($event)"
         *ngIf="products.length > itemsPerPage"
       ></app-paginator>
     </div>

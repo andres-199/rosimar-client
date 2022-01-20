@@ -51,6 +51,8 @@ export class ProductsComponent implements OnInit {
         { label: 'kg', value: 'kg' },
         { label: 'g', value: 'g' },
         { label: 'mg', value: 'mg' },
+        { label: 'Lt', value: 'lt' },
+        { label: 'M', value: 'm' },
       ],
     },
     { name: 'description', label: 'Descripción', type: 'textArea' },

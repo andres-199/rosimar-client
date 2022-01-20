@@ -254,4 +254,9 @@ export class PublicProductsComponent implements OnInit {
       },
     });
   }
+
+  onPaginate(page: number) {
+    window.scrollTo(0, 450);
+    this.actualPage = page;
+  }
 }

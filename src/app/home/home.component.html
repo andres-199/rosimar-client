@@ -19,12 +19,15 @@
   <!---------------------------------------carousel------------------------------------------>
   <div class="carousel" *ngIf="banners?.length">
     <carousel
+      [autoplay]="true"
       [images]="banners"
       cellWidth="100%"
       [dots]="true"
       [height]="370"
       style="z-index: 0; max-height: 374px"
       [objectFit]="'contain'"
+      [transitionDuration]="700"
+      [autoplayInterval]="3000"
     >
     </carousel>
     <button

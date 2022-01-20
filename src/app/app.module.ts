@@ -26,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     RouterModule.forRoot(AppRoutes, {
       relativeLinkResolution: 'legacy',
       useHash: true,
+      scrollPositionRestoration: 'top',
     }),
     HttpClientModule,
     ToolbarModule,
