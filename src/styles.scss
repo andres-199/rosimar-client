@@ -265,6 +265,13 @@ body {
   background: #ededed;
 }
 
-.container {
+// Use grid de bootstrap v4.6.1
+@import "~bootstrap/scss/bootstrap-grid.scss";
+
+.bg-container {
   background: #ededed;
+}
+
+.h-100 {
+  height: 100% !important;
 }

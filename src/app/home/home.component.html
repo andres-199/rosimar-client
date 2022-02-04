@@ -1,158 +1,175 @@
-<div>
-  <!---------------------------------------gif------------------------------------------>
-  <div class="gif" *ngIf="gif">
-    <img [src]="gif?.path" style="width: 100%; max-height: 90px" />
-    <button
-      color="primay"
-      mat-fab
-      style="position: absolute; top: 0.3em; right: 0.3em"
-      (click)="onClickAddGif()"
-      *ngIf="isLogedIn"
-    >
-      <mat-icon *ngIf="!loadingGif; else loadingT">add_a_photo</mat-icon>
-      <ng-template #loadingT>
-        <mat-spinner diameter="24"></mat-spinner>
-      </ng-template>
-    </button>
-  </div>
+<div class="container-fluid pt-4">
+  <div class="row">
+    <!---------------------------------------gif------------------------------------------>
+    <div class="col-12">
+      <div class="gif" *ngIf="gif">
+        <img [src]="gif?.path" style="width: 100%; max-height: 90px" />
+        <button
+          color="primay"
+          mat-fab
+          style="position: absolute; top: 0.3em; right: 0.3em"
+          (click)="onClickAddGif()"
+          *ngIf="isLogedIn"
+        >
+          <mat-icon *ngIf="!loadingGif; else loadingT">add_a_photo</mat-icon>
+          <ng-template #loadingT>
+            <mat-spinner diameter="24"></mat-spinner>
+          </ng-template>
+        </button>
+      </div>
+    </div>
 
-  <!---------------------------------------carousel------------------------------------------>
-  <div class="carousel" *ngIf="banners?.length">
-    <carousel
-      [autoplay]="true"
-      [images]="banners"
-      cellWidth="100%"
-      [dots]="true"
-      [height]="370"
-      style="z-index: 0; max-height: 374px"
-      [objectFit]="'contain'"
-      [transitionDuration]="700"
-      [autoplayInterval]="3000"
-    >
-    </carousel>
-    <button
-      color="primay"
-      mat-fab
-      style="position: absolute; top: 0.7em; right: 0.3em"
-      (click)="onClickAddBanner()"
-      *ngIf="isLogedIn"
-    >
-      <mat-icon *ngIf="!loadingBanner; else loadingT">add_a_photo</mat-icon>
-      <ng-template #loadingT>
-        <mat-spinner diameter="24"></mat-spinner>
-      </ng-template>
-    </button>
-  </div>
+    <!---------------------------------------carousel------------------------------------------>
+    <div class="col-12">
+      <div class="carousel" *ngIf="banners?.length">
+        <carousel
+          [autoplay]="true"
+          [images]="banners"
+          cellWidth="100%"
+          [dots]="true"
+          [height]="370"
+          style="z-index: 0; max-height: 374px"
+          [objectFit]="'contain'"
+          [transitionDuration]="700"
+          [autoplayInterval]="3000"
+        >
+        </carousel>
+        <button
+          color="primay"
+          mat-fab
+          style="position: absolute; top: 0.7em; right: 0.3em"
+          (click)="onClickAddBanner()"
+          *ngIf="isLogedIn"
+        >
+          <mat-icon *ngIf="!loadingBanner; else loadingT">add_a_photo</mat-icon>
+          <ng-template #loadingT>
+            <mat-spinner diameter="24"></mat-spinner>
+          </ng-template>
+        </button>
+      </div>
+    </div>
 
-  <!---------------------------------------categories------------------------------------------>
-  <div class="categories" *ngIf="categories?.length">
-    <h3 class="title" align="center">CATEGORÍAS</h3>
-    <hr style="border: 2px solid #5d7232; width: 63px" />
-    <carousel
-      [cellWidth]="346"
-      [height]="174"
-      style="z-index: 0; max-height: 374px"
-      [objectFit]="'contain'"
-      [cellsToShow]="3"
-    >
-      <ng-container *ngFor="let category of categories">
-        <img
-          style="cursor: pointer"
-          class="carousel-cell"
-          *ngIf="category.images?.length"
-          [src]="category.images[0].path"
-          [matTooltip]="category.name"
-          (click)="onClickCategory(category)"
-        />
-      </ng-container>
-    </carousel>
-  </div>
+    <!---------------------------------------categories------------------------------------------>
+    <div class="col-12">
+      <div class="categories" *ngIf="categories?.length">
+        <h3 class="title" align="center">CATEGORÍAS</h3>
+        <hr style="border: 2px solid #5d7232; width: 63px" />
+        <carousel
+          [cellWidth]="346"
+          [height]="174"
+          style="z-index: 0; max-height: 374px"
+          [objectFit]="'contain'"
+          [cellsToShow]="3"
+        >
+          <ng-container *ngFor="let category of categories">
+            <img
+              style="cursor: pointer"
+              class="carousel-cell"
+              *ngIf="category.images?.length"
+              [src]="category.images[0].path"
+              [matTooltip]="category.name"
+              (click)="onClickCategory(category)"
+            />
+          </ng-container>
+        </carousel>
+      </div>
+    </div>
 
-  <!---------------------------------------editable------------------------------------------>
-  <div class="editable">
-    <img
-      [src]="editable?.path || '../../assets/img/nuestros-productos.png'"
-      style="width: 100%"
-    />
-    <button
-      color="primay"
-      mat-fab
-      style="position: absolute; top: 0.5em; right: 0.5em"
-      (click)="onClickAddEditable()"
-      *ngIf="isLogedIn"
-    >
-      <mat-icon *ngIf="!loadingEditable; else loadingT">add_a_photo</mat-icon>
-      <ng-template #loadingT>
-        <mat-spinner diameter="24"></mat-spinner>
-      </ng-template>
-    </button>
-  </div>
-
-  <!--@TODO change for destacados-->
-  <!---------------------------------------offers------------------------------------------>
-  <div class="offers">
-    <h3 class="title" align="center">PRODUCTOS DESTACADOS</h3>
-    <hr style="border: 2px solid #5d7232; width: 63px" />
-    <div style="justify-content: space-around; display: flex; padding: 2em 0">
-      <mat-card
-        (click)="onClickProduct(offer.Product)"
-        style="width: 300px; height: 300px; cursor: pointer"
-        [matTooltip]="offer.Product.name"
-        *ngFor="let offer of offers"
+    <!---------------------------------------editable------------------------------------------>
+    <div class="col-12"></div>
+    <div class="editable">
+      <img
+        [src]="editable?.path || '../../assets/img/nuestros-productos.png'"
+        style="width: 100%"
+      />
+      <button
+        color="primay"
+        mat-fab
+        style="position: absolute; top: 0.5em; right: 0.5em"
+        (click)="onClickAddEditable()"
+        *ngIf="isLogedIn"
       >
-        <img
-          style="height: 100%; width: 100%; object-fit: contain"
-          [src]="offer.Product.images[0].path"
-        />
-      </mat-card>
+        <mat-icon *ngIf="!loadingEditable; else loadingT">add_a_photo</mat-icon>
+        <ng-template #loadingT>
+          <mat-spinner diameter="24"></mat-spinner>
+        </ng-template>
+      </button>
     </div>
 
-    <h3
-      style="
-        color: #5d7232;
-        font-weight: 500;
-        width: 100%;
-        text-align: center;
-        cursor: pointer;
-      "
-      [routerLink]="['/products', 'offers']"
-    >
-      Ver mas
-    </h3>
-  </div>
+    <!--@TODO change for destacados-->
+    <!---------------------------------------offers------------------------------------------>
+    <div class="col-12">
+      <div class="offers">
+        <h3 class="title" align="center">PRODUCTOS DESTACADOS</h3>
+        <hr style="border: 2px solid #5d7232; width: 63px" />
+        <div
+          style="justify-content: space-around; display: flex; padding: 2em 0"
+        >
+          <mat-card
+            (click)="onClickProduct(offer.Product)"
+            style="width: 300px; height: 300px; cursor: pointer"
+            [matTooltip]="offer.Product.name"
+            *ngFor="let offer of offers"
+          >
+            <img
+              style="height: 100%; width: 100%; object-fit: contain"
+              [src]="offer.Product.images[0].path"
+            />
+          </mat-card>
+        </div>
 
-  <!---------------------------------------static------------------------------------------>
-  <div class="static">
-    <div style="max-width: 285px; display: flex; flex-direction: column">
-      <img src="assets/img/calidad.png" alt="" />
-      <p style="font-weight: 400; font-size: 18px; text-align: center">
-        En Nuestra compañía se define la Calidad en cada uno de nuestros
-        productos en su proceso de producción, limpieza, empaque y transporte.
-      </p>
+        <h3
+          style="
+            color: #5d7232;
+            font-weight: 500;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+          "
+          [routerLink]="['/products', 'offers']"
+        >
+          Ver mas
+        </h3>
+      </div>
     </div>
-    <div style="max-width: 285px; display: flex; flex-direction: column">
-      <img src="assets/img/experiencia.png" alt="" />
-      <p style="font-weight: 400; font-size: 18px; text-align: center">
-        Nuestro mayor deber es poder brindar productos de alta calidad y una
-        experiencia única. Comprometidos con satisfacer las necesidades de sus
-        clientes y nuestros clientes.
-      </p>
-    </div>
-    <div style="max-width: 285px; display: flex; flex-direction: column">
-      <img src="assets/img/higiene.png" alt="" />
-      <p style="font-weight: 400; font-size: 18px; text-align: center">
-        Consideramos y aplicamos los más altos estándares de Calidad, Inocuidad
-        e Higiene dados por el Instituto Nacional de Vigilancia de Medicamentos,
-        y Alimentos INVIMA, garantizando su seguridad alimentaria.
-      </p>
-    </div>
-    <div style="max-width: 285px; display: flex; flex-direction: column">
-      <img src="assets/img/servicio.png" alt="" />
-      <p style="font-weight: 400; font-size: 18px; text-align: center">
-        La calidez, efectividad y talento humano hace que nuestra compañía
-        llegue a más lugares, apoyados por un equipo de trabajo comprometido y
-        capacitado para servir.
-      </p>
+
+    <!---------------------------------------static------------------------------------------>
+    <div class="col-12">
+      <div class="static">
+        <div style="max-width: 285px; display: flex; flex-direction: column">
+          <img src="assets/img/calidad.png" alt="" />
+          <p style="font-weight: 400; font-size: 18px; text-align: center">
+            En Nuestra compañía se define la Calidad en cada uno de nuestros
+            productos en su proceso de producción, limpieza, empaque y
+            transporte.
+          </p>
+        </div>
+        <div style="max-width: 285px; display: flex; flex-direction: column">
+          <img src="assets/img/experiencia.png" alt="" />
+          <p style="font-weight: 400; font-size: 18px; text-align: center">
+            Nuestro mayor deber es poder brindar productos de alta calidad y una
+            experiencia única. Comprometidos con satisfacer las necesidades de
+            sus clientes y nuestros clientes.
+          </p>
+        </div>
+        <div style="max-width: 285px; display: flex; flex-direction: column">
+          <img src="assets/img/higiene.png" alt="" />
+          <p style="font-weight: 400; font-size: 18px; text-align: center">
+            Consideramos y aplicamos los más altos estándares de Calidad,
+            Inocuidad e Higiene dados por el Instituto Nacional de Vigilancia de
+            Medicamentos, y Alimentos INVIMA, garantizando su seguridad
+            alimentaria.
+          </p>
+        </div>
+        <div style="max-width: 285px; display: flex; flex-direction: column">
+          <img src="assets/img/servicio.png" alt="" />
+          <p style="font-weight: 400; font-size: 18px; text-align: center">
+            La calidez, efectividad y talento humano hace que nuestra compañía
+            llegue a más lugares, apoyados por un equipo de trabajo comprometido
+            y capacitado para servir.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

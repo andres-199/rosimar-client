@@ -9,6 +9,7 @@ import AppRoutes from './app.routes';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { ToolbarModule } from './components/toolbar/toolbar.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -30,6 +31,7 @@ import { FormsModule } from '@angular/forms';
     }),
     HttpClientModule,
     ToolbarModule,
+    MatSidenavModule,
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,

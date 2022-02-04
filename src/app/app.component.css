@@ -18,3 +18,7 @@
   max-width: 100%;
   position: relative;
 }
+
+.mat-drawer-container {
+  background-color: transparent;
+}
