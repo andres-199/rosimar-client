@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../categories/interfaces/categoria.interface';
 import { CompanyService } from '../company/company.service';
-import { Company } from '../company/interfaces/company.interface';
 import { Product } from '../products/interfaces/product.interface';
 import { ProductsService } from '../products/products.service';
+import { CommonService } from '../services/common.service';
 
 @Component({
   selector: 'app-public-product',
@@ -16,14 +16,15 @@ export class PublicProductComponent implements OnInit {
   category?: Category;
   product?: Product;
   whatsapp: string[] = [];
-  constructor(
+  constructor (
     private activatedRoute: ActivatedRoute,
     private productsService: ProductsService,
     private router: Router,
-    private companyService: CompanyService
-  ) {}
+    private companyService: CompanyService,
+    public commonService: CommonService,
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.productId = this.activatedRoute.snapshot.params.id;
     this.productsService.getById(this.productId as number).subscribe({
       next: (product) => {
@@ -38,7 +39,7 @@ export class PublicProductComponent implements OnInit {
     this.getCompany();
   }
 
-  private getCompany() {
+  private getCompany () {
     this.companyService.company$.subscribe({
       next: (company) => {
         this.whatsapp = company.whatsapp.split('/');
@@ -46,7 +47,7 @@ export class PublicProductComponent implements OnInit {
     });
   }
 
-  private getCategory() {
+  private getCategory () {
     this.productsService.getPimaryCategory(this.productId as number).subscribe({
       next: (category) => {
         this.category = category;
@@ -54,7 +55,7 @@ export class PublicProductComponent implements OnInit {
     });
   }
 
-  getImagePath(category?: Category) {
+  getImagePath (category?: Category) {
     let path = '';
     if (category?.images) {
       if (category.images.length && category.images.length > 1) {
@@ -64,11 +65,11 @@ export class PublicProductComponent implements OnInit {
     return path;
   }
 
-  onClickProduct(product: Product) {
+  onClickProduct (product: Product) {
     this.router.navigate(['product', product.id]);
   }
 
-  onClickWhatsapp() {
+  onClickWhatsapp () {
     window.location.href = `https://api.whatsapp.com/send?phone=+573157349102`;
   }
 }

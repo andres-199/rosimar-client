@@ -1,7 +1,7 @@
 <div class="container-fluid pt-4">
   <div class="row">
     <!---------------------------------------gif------------------------------------------>
-    <div class="col-12">
+    <div class="col-12" [ngClass]="{ 'px-0': commonService.isTablet }">
       <div class="gif" *ngIf="gif">
         <img [src]="gif?.path" style="width: 100%; max-height: 90px" />
         <button
@@ -27,7 +27,9 @@
           [images]="banners"
           cellWidth="100%"
           [dots]="true"
-          [height]="370"
+          [height]="
+            commonService.isMobile ? 90 : commonService.isTablet ? 240 : 370
+          "
           style="z-index: 0; max-height: 374px"
           [objectFit]="'contain'"
           [transitionDuration]="700"
@@ -59,7 +61,9 @@
           [height]="174"
           style="z-index: 0; max-height: 374px"
           [objectFit]="'contain'"
-          [cellsToShow]="3"
+          [cellsToShow]="
+            commonService.isMobile ? 1 : commonService.isTablet ? 2 : 3
+          "
         >
           <ng-container *ngFor="let category of categories">
             <img
@@ -104,10 +108,12 @@
         <hr style="border: 2px solid #5d7232; width: 63px" />
         <div
           style="justify-content: space-around; display: flex; padding: 2em 0"
+          [ngClass]="{ 'flex-wrap': commonService.isTablet }"
         >
           <mat-card
             (click)="onClickProduct(offer.Product)"
             style="width: 300px; height: 300px; cursor: pointer"
+            [ngClass]="{ 'mb-3': commonService.isTablet }"
             [matTooltip]="offer.Product.name"
             *ngFor="let offer of offers"
           >
@@ -135,7 +141,7 @@
 
     <!---------------------------------------static------------------------------------------>
     <div class="col-12">
-      <div class="static">
+      <div class="static" [ngClass]="{ 'flex-wrap': commonService.isTablet }">
         <div style="max-width: 285px; display: flex; flex-direction: column">
           <img src="assets/img/calidad.png" alt="" />
           <p style="font-weight: 400; font-size: 18px; text-align: center">

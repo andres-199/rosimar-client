@@ -1,131 +1,152 @@
-<div
-  style="
-    width: calc(100% + 4em);
-    min-height: 370px;
-    position: relative;
-    margin: -2em -2em 2em -2em;
-  "
-  *ngIf="category"
->
-  <div
-    style="background-image: url('{{ getImagePath(category) }}');"
-    class="category"
-    [ngClass]="{ brightness: !getImagePath(category) }"
-  ></div>
-  <div style="position: absolute; top: 45%; width: 100%; text-align: center">
-    <h1 style="color: #ffffff; font-size: 48px; font-weight: 700">
-      {{ category.name }}
-    </h1>
-    <p style="font-size: 18px; font-weight: 500px; color: #ffffff">
-      Inicio - {{ category.name }}
-    </p>
-  </div>
-  <button
-    color="primay"
-    mat-fab
-    style="position: absolute; top: 1em; right: 1em"
-    (click)="onClickAddOfferImage()"
-    *ngIf="isLogedIn"
-  >
-    <mat-icon *ngIf="!loading; else loadingT">add_a_photo</mat-icon>
-    <ng-template #loadingT>
-      <mat-spinner diameter="24"></mat-spinner>
-    </ng-template>
-  </button>
-</div>
-
-<div class="products-contaienr">
-  <div class="filter">
-    <p style="font-size: 18px; font-weight: 400">Opciones de productos</p>
-    <mat-divider></mat-divider>
-
-    <ng-container *ngIf="categories?.length">
-      <p style="font-size: 18px; font-weight: 500; margin-top: 43px">
-        Categoría
-      </p>
-      <mat-selection-list #categoryList (selectionChange)="onSelectCategory()">
-        <mat-list-option
-          checkboxPosition="before"
-          *ngFor="let category of categories"
-          [value]="category"
-        >
-          {{ category.name }}
-        </mat-list-option>
-      </mat-selection-list>
-      <mat-divider></mat-divider>
-    </ng-container>
-
-    <ng-container *ngIf="brands?.length">
-      <p style="font-size: 18px; font-weight: 500; margin-top: 43px">Marca</p>
-      <mat-selection-list #brandList (selectionChange)="onSelectBrand()">
-        <mat-list-option
-          checkboxPosition="before"
-          *ngFor="let brand of brands"
-          [value]="brand"
-        >
-          {{ brand.name }}
-        </mat-list-option>
-      </mat-selection-list>
-      <mat-divider></mat-divider>
-    </ng-container>
-
-    <ng-container *ngIf="weights?.length">
-      <p style="font-size: 18px; font-weight: 500; margin-top: 43px">Peso</p>
-      <mat-selection-list
-        multiple="false"
-        #weightList
-        (selectionChange)="onSelectWeight()"
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 px-0">
+      <div
+        style="width: calc(100% + 4em); min-height: 370px; position: relative"
+        *ngIf="category"
       >
-        <mat-list-option
-          checkboxPosition="before"
-          *ngFor="let weight of weights"
-          [value]="{ unit: weight.unit, quantity: weight.quantity }"
+        <div
+          style="background-image: url('{{getImagePath(category)}}'); background-position: center"
+          class="category"
+          [ngClass]="{
+            brightness: !getImagePath(category)
+          }"
+        ></div>
+        <div
+          style="position: absolute; top: 45%; width: 100%; text-align: center"
         >
-          {{ weight.quantity }}{{ weight.unit }}
-        </mat-list-option>
-      </mat-selection-list>
-      <mat-divider></mat-divider>
-    </ng-container>
+          <h1 style="color: #ffffff; font-size: 48px; font-weight: 700">
+            {{ category.name }}
+          </h1>
+          <p style="font-size: 18px; font-weight: 500px; color: #ffffff">
+            Inicio - {{ category.name }}
+          </p>
+        </div>
+        <button
+          color="primay"
+          mat-fab
+          style="position: absolute; top: 1em; right: 1em"
+          (click)="onClickAddOfferImage()"
+          *ngIf="isLogedIn"
+        >
+          <mat-icon *ngIf="!loading; else loadingT">add_a_photo</mat-icon>
+          <ng-template #loadingT>
+            <mat-spinner diameter="24"></mat-spinner>
+          </ng-template>
+        </button>
+      </div>
+    </div>
   </div>
 
-  <!--------carousel------->
-  <div class="carousel-container">
-    <div class="carousel">
-      <ng-container *ngFor="let product of products; let i = index">
-        <mat-card
-          (click)="onClickProduct(product)"
-          style="
-            width: 228px;
-            height: 268px;
-            padding: 22px;
-            text-align: center;
-            border-radius: 16px;
-            margin: 23px;
-          "
-          *ngIf="
-            i < itemsPerPage * actualPage &&
-            i >= itemsPerPage * actualPage - itemsPerPage
-          "
-        >
-          <img
-            style="width: 96px; height: 145px"
-            [src]="product.images[0]?.path"
-          />
-          <mat-card-content>
-            <p style="font-size: 18px; margin-top: 22px">
-              {{ product.name }} {{ product.quantity }}{{ product.unit }}
-            </p>
-          </mat-card-content>
-        </mat-card>
-      </ng-container>
+  <div class="row pt-5">
+    <div class="col-12 col-md-4 col-lg-3">
+      <div class="filter">
+        <p style="font-size: 18px; font-weight: 400">Opciones de productos</p>
+        <mat-divider></mat-divider>
+
+        <ng-container *ngIf="categories?.length">
+          <p style="font-size: 18px; font-weight: 500; margin-top: 43px">
+            Categoría
+          </p>
+          <mat-selection-list
+            #categoryList
+            (selectionChange)="onSelectCategory()"
+          >
+            <mat-list-option
+              checkboxPosition="before"
+              *ngFor="let category of categories"
+              [value]="category"
+            >
+              {{ category.name }}
+            </mat-list-option>
+          </mat-selection-list>
+          <mat-divider></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="brands?.length">
+          <p style="font-size: 18px; font-weight: 500; margin-top: 43px">
+            Marca
+          </p>
+          <mat-selection-list #brandList (selectionChange)="onSelectBrand()">
+            <mat-list-option
+              checkboxPosition="before"
+              *ngFor="let brand of brands"
+              [value]="brand"
+            >
+              {{ brand.name }}
+            </mat-list-option>
+          </mat-selection-list>
+          <mat-divider></mat-divider>
+        </ng-container>
+
+        <ng-container *ngIf="weights?.length">
+          <p style="font-size: 18px; font-weight: 500; margin-top: 43px">
+            Peso
+          </p>
+          <mat-selection-list
+            multiple="false"
+            #weightList
+            (selectionChange)="onSelectWeight()"
+          >
+            <mat-list-option
+              checkboxPosition="before"
+              *ngFor="let weight of weights"
+              [value]="{ unit: weight.unit, quantity: weight.quantity }"
+            >
+              {{ weight.quantity }}{{ weight.unit }}
+            </mat-list-option>
+          </mat-selection-list>
+          <mat-divider></mat-divider>
+        </ng-container>
+      </div>
     </div>
-    <div style="width: 100%; margin-top: 2em" *ngIf="products">
-      <app-paginator
-        [totalItems]="products?.length"
-        [itemsPerPage]="itemsPerPage"
-        (onNext)="onPaginate($event)"
-        *ngIf="products.length > itemsPerPage"
-      ></app-paginator>
+
+    <div class="col-12 col-md-8 col-lg-9">
+      <!--------carousel------->
+      <div class="carousel-container">
+        <div
+          class="carousel"
+          [ngClass]="{
+            'd-flex justify-content-center': commonService.isMobile
+          }"
+        >
+          <ng-container *ngFor="let product of products; let i = index">
+            <mat-card
+              (click)="onClickProduct(product)"
+              style="
+                width: 228px;
+                height: 268px;
+                padding: 22px;
+                text-align: center;
+                border-radius: 16px;
+                margin: 23px;
+              "
+              *ngIf="
+                i < itemsPerPage * actualPage &&
+                i >= itemsPerPage * actualPage - itemsPerPage
+              "
+            >
+              <img
+                style="width: 96px; height: 145px"
+                [src]="product.images[0]?.path"
+              />
+              <mat-card-content>
+                <p style="font-size: 18px; margin-top: 22px">
+                  {{ product.name }} {{ product.quantity }}{{ product.unit }}
+                </p>
+              </mat-card-content>
+            </mat-card>
+          </ng-container>
+        </div>
+        <div style="width: 100%; margin-top: 2em" *ngIf="products">
+          <app-paginator
+            [totalItems]="products?.length"
+            [itemsPerPage]="itemsPerPage"
+            (onNext)="onPaginate($event)"
+            *ngIf="products.length > itemsPerPage"
+          ></app-paginator>
+        </div>
+      </div>
     </div>
   </div>
 </div>

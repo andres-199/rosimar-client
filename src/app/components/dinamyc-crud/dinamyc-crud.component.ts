@@ -12,6 +12,7 @@ import { CrudService } from './crud.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { CommonService } from 'src/app/services/common.service';
 
 export interface DisableButtonRule {
   action: 'disableDelete' | 'disableEdit';
@@ -29,14 +30,14 @@ export interface Col {
   field: string;
   width?: string;
   type?:
-    | 'list'
-    | 'array'
-    | 'object'
-    | 'image'
-    | 'date'
-    | 'money'
-    | 'chips'
-    | 'payment-method';
+  | 'list'
+  | 'array'
+  | 'object'
+  | 'image'
+  | 'date'
+  | 'money'
+  | 'chips'
+  | 'payment-method';
 }
 
 export interface FormField {
@@ -99,17 +100,18 @@ export class DinamycCrudComponent implements OnInit {
   @Output() onClickRow = new EventEmitter<any>();
   @Output() onClickEdit = new EventEmitter<any>();
 
-  constructor(
+  constructor (
     private dialog: MatDialog,
     private service: CrudService,
-    private _snackBar: MatSnackBar
-  ) {}
+    private _snackBar: MatSnackBar,
+    private commonService: CommonService,
+  ) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.getDataSource();
   }
 
-  getDataSource() {
+  getDataSource () {
     this.service.findAll(this.origin).subscribe((dataSource) => {
       this.onLoadDataSource.emit(dataSource);
       if (this.disabbleButtonRule) {
@@ -121,7 +123,7 @@ export class DinamycCrudComponent implements OnInit {
     });
   }
 
-  private setDisableButtonRule(dataSource: any[]) {
+  private setDisableButtonRule (dataSource: any[]) {
     dataSource = dataSource.map((item) => {
       const attr = this.disabbleButtonRule?.where.attribute;
       const value = this.disabbleButtonRule?.where.value;
@@ -131,10 +133,10 @@ export class DinamycCrudComponent implements OnInit {
     });
   }
 
-  public onEdit(data: any) {
+  public onEdit (data: any) {
     const ref = this.dialog.open(DinamycFormComponent, {
       data: { data, formFields: this.formFields },
-      minWidth: 500,
+      minWidth: this.commonService.isTablet ? '80vw' : 500,
     });
 
     ref.afterClosed().subscribe((_data) => {
@@ -144,10 +146,10 @@ export class DinamycCrudComponent implements OnInit {
     });
   }
 
-  public onDelete(data: any) {
+  public onDelete (data: any) {
     const ref = this.dialog.open(DinamycFormComponent, {
       data: { isDelete: true },
-      minWidth: 400,
+      minWidth: this.commonService.isTablet ? '80vw' : 400,
     });
 
     ref.afterClosed().subscribe((res) => {
@@ -157,10 +159,10 @@ export class DinamycCrudComponent implements OnInit {
     });
   }
 
-  public onRegister() {
+  public onRegister () {
     const ref = this.dialog.open(DinamycFormComponent, {
       data: { formFields: this.formFields },
-      minWidth: 500,
+      minWidth: this.commonService.isTablet ? '80vw' : 500,
     });
 
     ref.afterClosed().subscribe((data) => {
@@ -170,7 +172,7 @@ export class DinamycCrudComponent implements OnInit {
     });
   }
 
-  public update(data: any) {
+  public update (data: any) {
     const origin = this.originForm || this.origin;
     this.service.update(origin, data).subscribe(
       (res) => {
@@ -183,7 +185,7 @@ export class DinamycCrudComponent implements OnInit {
     );
   }
 
-  private create(data: any) {
+  private create (data: any) {
     const origin = this.originForm || this.origin;
     this.service.create(origin, data).subscribe(
       (res) => {
@@ -196,7 +198,7 @@ export class DinamycCrudComponent implements OnInit {
     );
   }
 
-  private delete(id: number) {
+  private delete (id: number) {
     const _origin = `${this.origin}/${id}`;
     this.service.delete(_origin).subscribe(
       (res) => {
@@ -209,20 +211,19 @@ export class DinamycCrudComponent implements OnInit {
     );
   }
 
-  onSuccess(is_create = true) {
-    const message = `Registro ${
-      is_create ? 'creado' : 'actualizado'
-    } exitosamente!`;
+  onSuccess (is_create = true) {
+    const message = `Registro ${is_create ? 'creado' : 'actualizado'
+      } exitosamente!`;
     this.showMsg(message);
   }
 
-  showMsg(message: string) {
+  showMsg (message: string) {
     this._snackBar.open(message, 'Aceptar', {
       duration: 7000,
     });
   }
 
-  applyFilter(event: Event) {
+  applyFilter (event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }

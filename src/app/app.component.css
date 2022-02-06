@@ -22,3 +22,15 @@
 .mat-drawer-container {
   background-color: transparent;
 }
+
+.sidenav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  border-left: none;
+}
+
+.active {
+  color: #f8b323;
+}

@@ -1,84 +1,118 @@
-<div
-  style="
-    width: calc(100% + 4em);
-    min-height: 370px;
-    position: relative;
-    margin: -2em -2em 2em -2em;
-  "
-  *ngIf="category && product"
->
-  <div
-    style="background-image: url('{{ getImagePath(category) }}');"
-    class="category"
-    [ngClass]="{ brightness: !getImagePath(category) }"
-  ></div>
-  <div style="position: absolute; top: 45%; width: 100%; text-align: center">
-    <h1 style="color: #ffffff; font-size: 48px; font-weight: 700">
-      {{ product.name }} {{ product.quantity }}{{ product.unit }}
-    </h1>
-    <p style="font-size: 18px; font-weight: 500px; color: #ffffff">
-      Inicio - {{ category.name }} - {{ product.name }}
-    </p>
-  </div>
-</div>
-
-<div class="product-container" *ngIf="product">
-  <mat-card
-    style="
-      width: 473px;
-      height: 526px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(196, 196, 196, 0.3);
-    "
-  >
-    <img style="width: 257px; height: 388px" [src]="product.images[0].path" />
-  </mat-card>
-  <div
-    style="
-      display: flex;
-      flex-direction: column;
-      max-width: 50%;
-      margin-left: 3em;
-    "
-  >
-    <h1>
-      <span style="font-size: 40px; font-weight: 700; color: #a1a848">
-        {{ product.name }} {{ product.quantity }}{{ product.unit }}
-      </span>
-    </h1>
-
-    <p style="font-size: 18px; font-weight: 400; margin-top: 2em">
-      {{ product.description }}
-    </p>
-    <mat-divider style="margin-top: 3em"></mat-divider>
-    <div style="margin-top: 2em; display: flex; align-items: center">
-      <img
-        src="assets/img/wpp.svg"
-        style="width: 40px; cursor: pointer"
-        (click)="onClickWhatsapp()"
-      />
-      <span
-        style="
-          font-size: 18px;
-          font-weight: 700;
-          color: #f8b323;
-          margin-left: 12px;
-        "
-        >Escríbenos<br />{{ whatsapp[0] }}</span
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 px-0">
+      <div
+        style="width: calc(100% + 4em); min-height: 370px; position: relative"
+        *ngIf="category && product"
       >
-      <img src="assets/img/cll.svg" style="margin-left: 60px" />
-      <span
-        style="
-          font-size: 18px;
-          font-weight: 700;
-          color: #f8b323;
-          margin-left: 12px;
-        "
-        >Llámenos<br />{{ whatsapp[1] }}</span
-      >
+        <div
+          style="background-image: url('{{getImagePath(category)}}'); background-position: center"
+          class="category"
+          [ngClass]="{ brightness: !getImagePath(category) }"
+        ></div>
+        <div
+          style="position: absolute; top: 45%; width: 100%; text-align: center"
+        >
+          <h1 style="color: #ffffff; font-size: 48px; font-weight: 700">
+            {{ product.name }} {{ product.quantity }}{{ product.unit }}
+          </h1>
+          <p style="font-size: 18px; font-weight: 500px; color: #ffffff">
+            Inicio - {{ category.name }} - {{ product.name }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="product" class="col-12">
+      <div [ngStyle]="{ padding: commonService.isTablet ? '2rem' : '4em' }">
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-4">
+            <mat-card
+              style="
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(196, 196, 196, 0.3);
+              "
+              [ngStyle]="{
+                width: commonService.isTablet ? 'auto' : '473px',
+                height: commonService.isTablet ? 'auto' : '526px'
+              }"
+            >
+              <img
+                style="width: 257px; height: 388px"
+                [src]="product.images[0].path"
+              />
+            </mat-card>
+          </div>
+
+          <div
+            class="col-12 col-md-6 col-lg-8"
+            [ngClass]="{ 'pt-5': commonService.isMobile }"
+          >
+            <div
+              style="display: flex; flex-direction: column; margin-left: 3em"
+              [ngStyle]="{
+                'max-width': commonService.isTablet ? '100%' : '76%',
+                'margin-left': commonService.isTablet ? '0' : '3em'
+              }"
+            >
+              <h1>
+                <span style="font-size: 40px; font-weight: 700; color: #a1a848">
+                  {{ product.name }} {{ product.quantity }}{{ product.unit }}
+                </span>
+              </h1>
+
+              <p style="font-size: 18px; font-weight: 400; margin-top: 2em">
+                {{ product.description }}
+              </p>
+              <mat-divider style="margin-top: 3em"></mat-divider>
+              <div style="margin-top: 2em" class="d-flex flex-wrap">
+                <div class="d-flex align-items-center">
+                  <img
+                    src="assets/img/wpp.svg"
+                    style="width: 40px; cursor: pointer"
+                    (click)="onClickWhatsapp()"
+                  />
+                  <span
+                    style="
+                      font-size: 18px;
+                      font-weight: 700;
+                      color: #f8b323;
+                      margin-left: 12px;
+                    "
+                  >
+                    Escríbenos<br />{{ whatsapp[0] }}
+                  </span>
+                </div>
+
+                <div
+                  class="d-flex align-items-center"
+                  [ngClass]="{ 'pt-3': commonService.isMobile }"
+                >
+                  <img
+                    src="assets/img/cll.svg"
+                    [ngStyle]="{
+                      'margin-left': commonService.isMobile ? '0' : '60px'
+                    }"
+                  />
+                  <span
+                    style="
+                      font-size: 18px;
+                      font-weight: 700;
+                      color: #f8b323;
+                      margin-left: 12px;
+                    "
+                  >
+                    Llámenos<br />{{ whatsapp[1] }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

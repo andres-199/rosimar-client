@@ -1,6 +1,64 @@
 <mat-sidenav-container class="h-100">
+  <mat-sidenav #mainSidenav mode="over" position="end" class="sidenav">
+    <mat-nav-list *ngIf="!isAdminRoutes">
+      <div *ngFor="let _route of routesGuest">
+        <mat-list-item
+          *ngIf="!_route.isContact"
+          [routerLink]="_route.routerLink"
+          (click)="mainSidenav.toggle()"
+        >
+          <mat-icon matListIcon [ngClass]="{ active: guestRoute.isActive }">
+            {{ _route.icon }}
+          </mat-icon>
+          <a
+            matLine
+            [routerLink]="_route.routerLink"
+            routerLinkActive="active"
+            #guestRoute="routerLinkActive"
+          >
+            {{ _route.label }}
+          </a>
+        </mat-list-item>
+
+        <mat-list-item
+          *ngIf="_route.isContact"
+          (click)="mainSidenav.toggle(); onClickContact()"
+        >
+          <mat-icon matListIcon> call </mat-icon>
+          <span matLine> CONTÁCTENOS </span>
+        </mat-list-item>
+      </div>
+    </mat-nav-list>
+
+    <mat-nav-list *ngIf="isAdminRoutes">
+      <mat-list-item
+        *ngFor="let _route of routesAdmin"
+        [routerLink]="_route.routerLink"
+        (click)="mainSidenav.toggle()"
+      >
+        <mat-icon matListIcon [ngClass]="{ active: adminRoute.isActive }">
+          {{ _route.icon }}
+        </mat-icon>
+        <a
+          matLine
+          [routerLink]="_route.routerLink"
+          routerLinkActive="active"
+          #adminRoute="routerLinkActive"
+        >
+          {{ _route.label }}
+        </a>
+      </mat-list-item>
+
+      <mat-list-item (click)="mainSidenav.toggle(); onClickExit()">
+        <mat-icon matListIcon> logout </mat-icon>
+        <span matLine> Salir </span>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
   <mat-sidenav-content style="overflow-x: inherit">
     <app-toolbar
+      (toggleMenu)="mainSidenav.toggle()"
       [isAdminRoutes]="isAdminRoutes"
       *ngIf="!isLoginPage"
     ></app-toolbar>
@@ -36,7 +94,10 @@
 
       <!---------------------------------------contact------------------------------------------>
       <section id="contact">
-        <div class="contact">
+        <div
+          class="contact"
+          [ngClass]="{ 'flex-wrap': commonService.isTablet }"
+        >
           <div
             style="
               display: flex;
@@ -58,6 +119,7 @@
               flex-direction: column;
               position: relative;
             "
+            [ngClass]="{ 'px-4 py-5': commonService.isTablet }"
             *ngIf="company"
           >
             <button
@@ -294,14 +356,14 @@
 
     <mat-toolbar
       color="primary"
-      style="height: 122px"
+      style="min-height: 122px"
       [ngClass]="{ 'login-page-footer': isLoginPage }"
     >
       <div style="width: 100%" align="center">
-        <span
-          >Diseño: HF | copyryght©2021 | Todos los Derechos Reservados por
-          Distribuciones Rosimar S.A.S</span
-        >
+        <span style="white-space: normal">
+          Diseño: HF | copyryght©2021 | Todos los Derechos Reservados por
+          Distribuciones Rosimar S.A.S
+        </span>
       </div>
     </mat-toolbar>
   </mat-sidenav-content>

@@ -1,5 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { CommonService } from 'src/app/services/common.service';
 import { UsersService } from 'src/app/users/users.service';
 
 declare var document: any;
@@ -10,20 +16,26 @@ declare var document: any;
   styleUrls: ['./toolbar.component.css'],
 })
 export class ToolbarComponent implements OnInit {
+
   isLogedIn?: boolean;
   @Input() isAdminRoutes?: boolean;
-  constructor(private userService: UsersService) {}
+  @Output() toggleMenu = new EventEmitter<boolean>()
 
-  ngOnInit(): void {
+  constructor (
+    private userService: UsersService,
+    public commonService: CommonService,
+  ) { }
+
+  ngOnInit (): void {
     this.isLogedIn = this.userService.isLogedIn;
   }
 
-  onClickExit() {
+  onClickExit () {
     this.userService.logout();
     this.isLogedIn = false;
   }
 
-  onClickContact() {
+  onClickContact () {
     document.querySelector('#contact').scrollIntoView();
   }
 }

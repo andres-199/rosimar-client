@@ -8,6 +8,7 @@ import { ImagesComponent } from '../components/images/images.component';
 import { Imagen } from '../components/images/interfaces/imagen.interface';
 import { Offer } from '../offers/interfaces/offer.interface';
 import { Product } from '../products/interfaces/product.interface';
+import { CommonService } from '../services/common.service';
 import { ImagesService } from '../shared/images.service';
 import { UsersService } from '../users/users.service';
 import { HomeService } from './home.service';
@@ -33,7 +34,8 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private userService: UsersService,
     private dialogRef: MatDialog,
-    private imageService: ImagesService
+    private imageService: ImagesService,
+    public commonService: CommonService,
   ) {}
 
   ngOnInit(): void {

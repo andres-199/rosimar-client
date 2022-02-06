@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CompanyService } from './company/company.service';
@@ -7,8 +13,11 @@ import { Company } from './company/interfaces/company.interface';
 import { ImagesComponent } from './components/images/images.component';
 import { Imagen } from './components/images/interfaces/imagen.interface';
 import { HomeService } from './home/home.service';
+import { CommonService } from './services/common.service';
 import { ImagesService } from './shared/images.service';
 import { UsersService } from './users/users.service';
+
+declare var document: any;
 
 @Component({
   selector: 'app-root',
@@ -16,6 +25,9 @@ import { UsersService } from './users/users.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+
+  @ViewChild('mainSidenav', { static: true }) navigationSidenav!: MatSidenav
+
   isLoginPage = false;
   isAdminRoutes?: boolean;
   loadingBanner = false;
@@ -30,16 +42,23 @@ export class AppComponent implements OnInit {
   showCompanyForm = false;
   loadingCompany = false;
 
-  constructor(
+  routesGuest: MainRoute[]
+  routesAdmin: MainRoute[]
+
+  constructor (
     private router: Router,
     private homeService: HomeService,
     private dialogRef: MatDialog,
     private imageService: ImagesService,
     private userService: UsersService,
-    private companyService: CompanyService
-  ) {}
+    private companyService: CompanyService,
+    public commonService: CommonService,
+  ) {
+    this.routesGuest = this._routesGuest
+    this.routesAdmin = this._routesAdmin
+  }
 
-  ngOnInit() {
+  ngOnInit () {
     this.isLogedIn = this.userService.isLogedIn;
     this.getBanner();
     this.getCatalogo();
@@ -54,7 +73,78 @@ export class AppComponent implements OnInit {
       });
   }
 
-  private getCompany() {
+  private get _routesGuest (): MainRoute[] {
+    return [
+      {
+        label: 'INICIO',
+        routerLink: 'home',
+        icon: 'home',
+      },
+      {
+        label: 'TU EMPRESA',
+        routerLink: 'company',
+        icon: 'business',
+      },
+      {
+        label: 'PRODUCTOS',
+        routerLink: 'categories',
+        icon: 'shopping_bag',
+      },
+      {
+        label: 'OFERTAS',
+        routerLink: 'products/offers',
+        icon: 'inventory',
+      },
+      {
+        label: 'CONTÁCTENOS',
+        routerLink: '',
+        icon: 'call',
+        isContact: true,
+      },
+      {
+        label: 'INGRESAR',
+        routerLink: 'login',
+        icon: 'login',
+      },
+    ]
+  }
+
+  private get _routesAdmin (): MainRoute[] {
+    return [
+      {
+        label: 'Inicio',
+        routerLink: 'home',
+        icon: 'home',
+      },
+      {
+        label: 'Marcas',
+        routerLink: 'admin/brands',
+        icon: 'dns',
+      },
+      {
+        label: 'Categorías',
+        routerLink: 'admin/categories',
+        icon: 'list',
+      },
+      {
+        label: 'Productos',
+        routerLink: 'admin/products',
+        icon: 'shopping_bag',
+      },
+      {
+        label: 'Ofertas',
+        routerLink: 'admin/offers',
+        icon: 'inventory',
+      },
+      {
+        label: 'Usuarios',
+        routerLink: 'admin/users',
+        icon: 'people',
+      },
+    ]
+  }
+
+  private getCompany () {
     this.companyService.company$.subscribe({
       next: (company) => {
         this.company = company;
@@ -68,7 +158,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private getBanner() {
+  private getBanner () {
     this.homeService.getImage('banner-footer').subscribe({
       next: (image) => {
         this.loadingBanner = false;
@@ -80,7 +170,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private getCatalogo() {
+  private getCatalogo () {
     this.homeService.getImage('catalogo-qr').subscribe({
       next: (image) => {
         this.loadingCatalogo = false;
@@ -92,11 +182,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  onClickWhatsapp() {
+  onClickWhatsapp () {
     window.location.href = `https://api.whatsapp.com/send?phone=+57${this.whatsapp[0]}`;
   }
 
-  onClickAddBanner() {
+  onClickAddBanner () {
     this.loadingBanner = true;
     let imageId: number;
     let images;
@@ -129,8 +219,8 @@ export class AppComponent implements OnInit {
         const action = !images.length
           ? 'delete'
           : imageId
-          ? 'update'
-          : 'create';
+            ? 'update'
+            : 'create';
 
         this.imageService[action](image).subscribe({
           next: (reponse) => {
@@ -144,7 +234,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  onClickAddCatalogo() {
+  onClickAddCatalogo () {
     this.loadingCatalogo = true;
     let imageId: number;
     let images;
@@ -177,8 +267,8 @@ export class AppComponent implements OnInit {
         const action = !images.length
           ? 'delete'
           : imageId
-          ? 'update'
-          : 'create';
+            ? 'update'
+            : 'create';
 
         this.imageService[action](image).subscribe({
           next: (reponse) => {
@@ -192,18 +282,17 @@ export class AppComponent implements OnInit {
     });
   }
 
-  onCLickEdicCompany() {
+  onCLickEdicCompany () {
     this.showCompanyForm = true;
   }
 
-  onSubmit() {
+  onSubmit () {
     this.showCompanyForm = false;
     this.loadingCompany = true;
     if (this.company) {
       this.company.phone = `${this.phone[0] || ''} / ${this.phone[1] || ''}`;
-      this.company.whatsapp = `${this.whatsapp[0] || ''} / ${
-        this.whatsapp[1] || ''
-      }`;
+      this.company.whatsapp = `${this.whatsapp[0] || ''} / ${this.whatsapp[1] || ''
+        }`;
       this.companyService.update(this.company).subscribe({
         next: (response) => {
           this.getCompany();
@@ -214,4 +303,22 @@ export class AppComponent implements OnInit {
       });
     }
   }
+
+  onClickContact () {
+    document.querySelector('#contact').scrollIntoView();
+  }
+
+  onClickExit () {
+    this.userService.logout();
+    this.isLogedIn = false;
+  }
+
+}
+
+interface MainRoute {
+  label: string
+  routerLink: string
+  icon: string
+  isActive?: boolean
+  isContact?: boolean
 }

@@ -3,8 +3,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { map } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({

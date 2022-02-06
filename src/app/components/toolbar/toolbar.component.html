@@ -4,10 +4,14 @@
       <img
         routerLink
         src="assets/img/logo_encabezado.svg"
+        class="logo_encabezado"
         style="margin-left: 1em; max-width: 210px; max-height: 57px"
       />
     </div>
-    <div style="flex-grow: 4; display: flex; justify-content: end">
+    <div
+      *ngIf="!commonService.isTablet"
+      style="flex-grow: 4; display: flex; justify-content: end"
+    >
       <div><span>SÍGUENOS</span></div>
       <div>
         <a href="https://web.facebook.com/rosimarbarranquilla">
@@ -26,7 +30,10 @@
         </a>
       </div>
     </div>
-    <div style="flex-grow: 1; justify-content: end">
+    <div
+      *ngIf="!commonService.isTablet; else bottonMenuTemplate"
+      style="flex-grow: 1; justify-content: end"
+    >
       <button
         style="float: right; margin-top: -0.2em; margin-right: 1em"
         mat-button
@@ -38,7 +45,11 @@
       </button>
     </div>
   </div>
-  <div style="width: 100%; display: flex; justify-content: center">
+
+  <div
+    *ngIf="!commonService.isTablet"
+    style="width: 100%; display: flex; justify-content: center"
+  >
     <button
       style="margin-left: 2em; margin-right: 2em"
       mat-button
@@ -84,10 +95,11 @@
 <mat-toolbar class="toolbar" color="primary" *ngIf="isAdminRoutes">
   <img
     routerLink
+    class="logo_encabezado"
     src="assets/img/logo_encabezado.svg"
     style="margin-left: 1em; max-width: 210px; max-height: 57px"
   />
-  <div class="menu">
+  <div *ngIf="!commonService.isTablet; else bottonMenuTemplate" class="menu">
     <button mat-button routerLink="admin/brands" routerLinkActive="active">
       Marcas
     </button>
@@ -113,3 +125,11 @@
     </button>
   </div>
 </mat-toolbar>
+
+<ng-template #bottonMenuTemplate>
+  <div class="ml-auto">
+    <button mat-icon-button (click)="toggleMenu.emit()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</ng-template>

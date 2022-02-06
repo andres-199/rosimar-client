@@ -1,88 +1,129 @@
-<div class="company-container">
-  <!---------------------------------------carousel------------------------------------------>
-  <div class="carousel" *ngIf="images.length">
-    <carousel
-      [images]="images"
-      cellWidth="100%"
-      [dots]="true"
-      [height]="370"
-      style="z-index: 0; max-height: 374px"
-      [objectFit]="'contain'"
-    >
-    </carousel>
-    <button
-      color="primay"
-      mat-fab
-      style="position: absolute; top: 1em; right: 0.7em"
-      (click)="onClickAddimage()"
-      *ngIf="isLogedIn"
-    >
-      <mat-icon *ngIf="!loading; else loadingT">add_a_photo</mat-icon>
-      <ng-template #loadingT>
-        <mat-spinner diameter="24"></mat-spinner>
-      </ng-template>
-    </button>
+<div class="container-fluid pt-4">
+  <div class="row">
+    <div class="col-12">
+      <!---------------------------------------carousel------------------------------------------>
+      <div class="carousel" *ngIf="images.length">
+        <carousel
+          [images]="images"
+          cellWidth="100%"
+          [dots]="true"
+          [height]="
+            commonService.isMobile ? 90 : commonService.isTablet ? 240 : 370
+          "
+          style="z-index: 0; max-height: 374px"
+          [objectFit]="'contain'"
+        >
+        </carousel>
+        <button
+          color="primay"
+          mat-fab
+          style="position: absolute; top: 1em; right: 0.7em"
+          (click)="onClickAddimage()"
+          *ngIf="isLogedIn"
+        >
+          <mat-icon *ngIf="!loading; else loadingT">add_a_photo</mat-icon>
+          <ng-template #loadingT>
+            <mat-spinner diameter="24"></mat-spinner>
+          </ng-template>
+        </button>
+      </div>
+    </div>
   </div>
-  <div style="margin-top: 3em; width: 75%; text-align: center">
-    <h1 style="color: #716f6f; font-weight: 700; font-size: 40px">
-      Reseña histórica
-    </h1>
-    <hr style="border: 2px solid #5d7232; width: 63px" />
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-9">
+      <div class="row">
+        <div class="col-12">
+          <div style="margin-top: 3em; text-align: center">
+            <h1 style="color: #716f6f; font-weight: 700; font-size: 40px">
+              Reseña histórica
+            </h1>
+            <hr style="border: 2px solid #5d7232; width: 63px" />
+          </div>
+          <div style="margin-top: 2em">
+            <p style="color: #716f6f; font-size: 18px">
+              Distribuciones Rosimar s.a.s es una compañía familiar situada en
+              la ciudad de barranquilla dedicada a la distribución de productos
+              de ganadería, mascotas y maíz de consumo humano entre otros. Fue
+              creada desde junio de 1992 con la plena convicción de ser la
+              compañía N°1 en comercialización de productos de ganadería
+              mascotas y maíz de consumo humano en la región caribe. Contamos
+              con el mejor talento humano, infraestructura y logística dispuesto
+              para a atender todas tus necesidades y que tus pedidos lleguen a
+              tiempo para que puedas consentir a tus mascotas y darle la mejor
+              alimentación a tus crías de animales, solo contáctate con
+              nosotros, con gusto te atenderemos.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 py-2">
+          <mat-card class="card h-100" *ngIf="company">
+            <mat-card-title style="text-align: center">
+              <h1 class="card-title">Misión</h1>
+            </mat-card-title>
+            <mat-card-content class="card-content">
+              <p style="font-size: 18px; font-weight: 400">
+                {{ company?.mision }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="col-12 col-md-6 py-2">
+          <mat-card class="card h-100" *ngIf="company">
+            <mat-card-title style="text-align: center">
+              <h1 class="card-title">Visión</h1>
+            </mat-card-title>
+            <mat-card-content class="card-content">
+              <p style="font-size: 18px; font-weight: 400">
+                {{ company?.vision }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
   </div>
-  <div style="margin-top: 2em; width: 75%">
-    <p style="color: #716f6f; font-size: 18px">
-      Distribuciones Rosimar s.a.s es una compañía familiar situada en la ciudad
-      de barranquilla dedicada a la distribución de productos de ganadería,
-      mascotas y maíz de consumo humano entre otros. Fue creada desde junio de
-      1992 con la plena convicción de ser la compañía N°1 en comercialización de
-      productos de ganadería mascotas y maíz de consumo humano en la región
-      caribe. Contamos con el mejor talento humano, infraestructura y logística
-      dispuesto para a atender todas tus necesidades y que tus pedidos lleguen a
-      tiempo para que puedas consentir a tus mascotas y darle la mejor
-      alimentación a tus crías de animales, solo contáctate con nosotros, con
-      gusto te atenderemos.
-    </p>
-  </div>
-  <div class="cards-container">
-    <mat-card class="card" *ngIf="company">
-      <mat-card-title style="text-align: center">
-        <h1 class="card-title">Misión</h1>
-      </mat-card-title>
-      <mat-card-content class="card-content">
-        <p style="font-size: 18px; font-weight: 400">{{ company?.mision }}</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="card" *ngIf="company">
-      <mat-card-title style="text-align: center">
-        <h1 class="card-title">Visión</h1>
-      </mat-card-title>
-      <mat-card-content class="card-content">
-        <p style="font-size: 18px; font-weight: 400">{{ company?.vision }}</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <div style="display: flex; margin-top: 3em; width: 100%" *ngIf="company">
-    <mat-card
-      style="border-radius: 0; width: 50%; min-height: 500px; padding: 3em"
-    >
-      <mat-card-title style="text-align: center">
-        <h1 class="card-title">Valores Coporporativos</h1>
-      </mat-card-title>
-      <mat-card-content class="card-content">
-        <p
-          style="font-size: 18px; font-weight: 400"
-          [innerHTML]="company?.corporate_values"
-        ></p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card
-      style="
-        border-radius: 0;
-        width: 50%;
-        min-height: 500px;
-        background-color: #f8b323;
-      "
-    >
-    </mat-card>
+
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="company-container">
+        <div *ngIf="!commonService.isMobile" class="cards-container"></div>
+        <div
+          style="display: flex; margin-top: 3em; width: 100%"
+          [ngClass]="{ 'flex-wrap': commonService.isTablet }"
+          *ngIf="company"
+        >
+          <mat-card
+            style="border-radius: 0; padding: 3em"
+            [ngStyle]="{
+              width: commonService.isMobile ? '100%' : '50%',
+              'min-height': commonService.isMobile ? '100px' : '300px'
+            }"
+          >
+            <mat-card-title style="text-align: center">
+              <h1 class="card-title">Valores Coporporativos</h1>
+            </mat-card-title>
+            <mat-card-content class="card-content">
+              <p
+                style="font-size: 18px; font-weight: 400"
+                [innerHTML]="company?.corporate_values"
+              ></p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card
+            *ngIf="!commonService.isMobile"
+            style="
+              border-radius: 0;
+              width: 50%;
+              min-height: 500px;
+              background-color: #f8b323;
+            "
+          >
+          </mat-card>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
