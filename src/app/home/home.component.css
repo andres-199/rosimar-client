@@ -36,3 +36,17 @@
 .offers {
   margin-top: 2em;
 }
+
+@media (max-width: 768px) {
+  .offers mat-card {
+    width: 150px !important;
+    height: 150px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .offers mat-card {
+    width: 200px !important;
+    height: 200px !important;
+  }
+}

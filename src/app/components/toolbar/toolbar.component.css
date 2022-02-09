@@ -2,7 +2,7 @@
   background-image: url("../../../assets/img/encabezado.png");
   height: 80px;
   background-size: cover;
-    background-repeat: no-repeat;
+  background-repeat: no-repeat;
 }
 
 button:hover {
@@ -27,6 +27,21 @@ button {
   flex-direction: column;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+@media (max-width: 992px) {
+  .toolbar-home {
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .toolbar-home .logo_encabezado,
+  .toolbar .logo_encabezado {
+    margin-left: 0px !important;
+    max-width: 120px !important;
+    height: auto !important;
+  }
 }
 
 .active {

@@ -4,6 +4,7 @@ import { Image } from 'angular-responsive-carousel';
 import { tap } from 'rxjs/operators';
 import { ImagesComponent } from '../components/images/images.component';
 import { Imagen } from '../components/images/interfaces/imagen.interface';
+import { CommonService } from '../services/common.service';
 import { UsersService } from '../users/users.service';
 import { CompanyService } from './company.service';
 import { Company } from './interfaces/company.interface';
@@ -14,22 +15,25 @@ import { Company } from './interfaces/company.interface';
   styleUrls: ['./company.component.css'],
 })
 export class CompanyComponent implements OnInit {
+
   company?: Company;
   images: Image[] = [];
   loading = false;
   isLogedIn = false;
-  constructor(
+
+  constructor (
     private companyService: CompanyService,
     private userService: UsersService,
-    private dialogRef: MatDialog
-  ) {}
+    private dialogRef: MatDialog,
+    public commonService: CommonService,
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.isLogedIn = this.userService.isLogedIn;
     this.getCompany();
   }
 
-  getCompany() {
+  getCompany () {
     this.companyService.company$
       .pipe(
         tap((company) => {
@@ -49,7 +53,7 @@ export class CompanyComponent implements OnInit {
       });
   }
 
-  onClickAddimage() {
+  onClickAddimage () {
     this.loading = true;
     let images;
 

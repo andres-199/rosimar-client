@@ -9,6 +9,7 @@ import { Imagen } from '../components/images/interfaces/imagen.interface';
 import { Brand } from '../products/interfaces/brand.interface';
 import { Product } from '../products/interfaces/product.interface';
 import { ProductsService } from '../products/products.service';
+import { CommonService } from '../services/common.service';
 import { ImagesService } from '../shared/images.service';
 import { UsersService } from '../users/users.service';
 
@@ -44,7 +45,8 @@ export class PublicProductsComponent implements OnInit {
     private router: Router,
     private imageService: ImagesService,
     private dialogRef: MatDialog,
-    private userService: UsersService
+    private userService: UsersService,
+    public commonService: CommonService,
   ) {}
 
   ngOnInit(): void {
