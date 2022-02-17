@@ -2,7 +2,10 @@
   <div class="row">
     <div class="col-12 px-0">
       <div
-        style="width: calc(100% + 4em); min-height: 370px; position: relative"
+        [ngStyle]="{
+          width: commonService.isTablet ? '100%' : 'calc(100% + 4em)'
+        }"
+        style="min-height: 370px; position: relative"
         *ngIf="category"
       >
         <div
@@ -13,6 +16,7 @@
           }"
         ></div>
         <div
+          class="title_header"
           style="position: absolute; top: 45%; width: 100%; text-align: center"
         >
           <h1 style="color: #ffffff; font-size: 48px; font-weight: 700">
@@ -38,16 +42,18 @@
     </div>
   </div>
 
-  <div class="row pt-5">
-    <div class="col-12 col-md-4 col-lg-3">
-      <div class="filter">
-        <p style="font-size: 18px; font-weight: 400">Opciones de productos</p>
-        <mat-divider></mat-divider>
+  <div class="row pt-2">
+    <div
+      [ngStyle]="{ display: showFilter ? 'initial' : 'none' }"
+      class="col-12 col-md-4 col-lg-3"
+    >
+      <p style="font-size: 18px; font-weight: 400">Opciones de productos</p>
+      <mat-divider></mat-divider>
+      <br />
 
-        <ng-container *ngIf="categories?.length">
-          <p style="font-size: 18px; font-weight: 500; margin-top: 43px">
-            Categoría
-          </p>
+      <mat-accordion #accordionFilter="matAccordion" class="mat__accordion">
+        <mat-expansion-panel *ngIf="categories?.length">
+          <mat-expansion-panel-header> Categoría </mat-expansion-panel-header>
           <mat-selection-list
             #categoryList
             (selectionChange)="onSelectCategory()"
@@ -60,13 +66,10 @@
               {{ category.name }}
             </mat-list-option>
           </mat-selection-list>
-          <mat-divider></mat-divider>
-        </ng-container>
+        </mat-expansion-panel>
 
-        <ng-container *ngIf="brands?.length">
-          <p style="font-size: 18px; font-weight: 500; margin-top: 43px">
-            Marca
-          </p>
+        <mat-expansion-panel *ngIf="brands?.length">
+          <mat-expansion-panel-header> Marca </mat-expansion-panel-header>
           <mat-selection-list #brandList (selectionChange)="onSelectBrand()">
             <mat-list-option
               checkboxPosition="before"
@@ -76,13 +79,10 @@
               {{ brand.name }}
             </mat-list-option>
           </mat-selection-list>
-          <mat-divider></mat-divider>
-        </ng-container>
+        </mat-expansion-panel>
 
-        <ng-container *ngIf="weights?.length">
-          <p style="font-size: 18px; font-weight: 500; margin-top: 43px">
-            Peso
-          </p>
+        <mat-expansion-panel *ngIf="weights?.length">
+          <mat-expansion-panel-header> Peso </mat-expansion-panel-header>
           <mat-selection-list
             multiple="false"
             #weightList
@@ -96,56 +96,55 @@
               {{ weight.quantity }}{{ weight.unit }}
             </mat-list-option>
           </mat-selection-list>
-          <mat-divider></mat-divider>
-        </ng-container>
-      </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
 
-    <div class="col-12 col-md-8 col-lg-9">
+    <div *ngIf="!showFilter && (categories?.length || brands?.length || weights?.length)" class="col-12">
+      <button mat-stroked-button (click)="showFilter = !showFilter">
+        <mat-icon>tune</mat-icon>
+        Filtros
+      </button>
+    </div>
+
+    <div #divProducts class="col-12 col-md-8 col-lg-9">
       <!--------carousel------->
-      <div class="carousel-container">
-        <div
-          class="carousel"
-          [ngClass]="{
-            'd-flex justify-content-center': commonService.isMobile
-          }"
-        >
-          <ng-container *ngFor="let product of products; let i = index">
+      <div class="row">
+        <ng-container *ngFor="let product of products; let i = index">
+          <div
+            *ngIf="
+              i < itemsPerPage * actualPage &&
+              i >= itemsPerPage * actualPage - itemsPerPage
+            "
+            class="col-6 col-md-4 col-lg-3 my-3"
+          >
             <mat-card
               (click)="onClickProduct(product)"
-              style="
-                width: 228px;
-                height: 268px;
-                padding: 22px;
-                text-align: center;
-                border-radius: 16px;
-                margin: 23px;
-              "
-              *ngIf="
-                i < itemsPerPage * actualPage &&
-                i >= itemsPerPage * actualPage - itemsPerPage
-              "
+              class="h-100"
+              [ngClass]="{ 'py-4': !commonService.isTablet }"
+              style="text-align: center; border-radius: 16px"
             >
               <img
                 style="width: 96px; height: 145px"
                 [src]="product.images[0]?.path"
               />
-              <mat-card-content>
-                <p style="font-size: 18px; margin-top: 22px">
+              <mat-card-content class="product_description">
+                <p style="margin-top: 22px">
                   {{ product.name }} {{ product.quantity }}{{ product.unit }}
                 </p>
               </mat-card-content>
             </mat-card>
-          </ng-container>
-        </div>
-        <div style="width: 100%; margin-top: 2em" *ngIf="products">
-          <app-paginator
-            [totalItems]="products?.length"
-            [itemsPerPage]="itemsPerPage"
-            (onNext)="onPaginate($event)"
-            *ngIf="products.length > itemsPerPage"
-          ></app-paginator>
-        </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div style="width: 100%; margin-top: 2em" *ngIf="products">
+        <app-paginator
+          [totalItems]="products?.length"
+          [itemsPerPage]="itemsPerPage"
+          (onNext)="onPaginate($event)"
+          *ngIf="products.length > itemsPerPage"
+        ></app-paginator>
       </div>
     </div>
   </div>

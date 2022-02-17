@@ -38,7 +38,9 @@ button {
 @media (max-width: 768px) {
   .toolbar-home .logo_encabezado,
   .toolbar .logo_encabezado {
-    margin-left: 0px !important;
+    display: flex;
+    margin-left: auto !important;
+    margin-right: auto !important;
     max-width: 120px !important;
     height: auto !important;
   }

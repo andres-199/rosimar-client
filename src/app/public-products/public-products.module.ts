@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PaginatorModule } from '../components/paginator/paginator.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { ImagesModule } from '../components/images/images.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
@@ -27,9 +28,11 @@ const routes: Routes = [
     MatIconModule,
     PaginatorModule,
     MatButtonModule,
+    MatIconModule,
     MatDialogModule,
+    MatExpansionModule,
     ImagesModule,
     MatProgressSpinnerModule,
   ],
 })
-export class PublicProductsModule {}
+export class PublicProductsModule { }

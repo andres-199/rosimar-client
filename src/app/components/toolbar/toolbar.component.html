@@ -1,5 +1,10 @@
 <mat-toolbar class="toolbar-home" color="primary" *ngIf="!isAdminRoutes">
   <div style="width: 100%; display: flex; padding-top: 1em">
+    <div
+      *ngIf="commonService.isMobile"
+      class="px-3"
+    ></div>
+
     <div style="flex-grow: 1">
       <img
         routerLink

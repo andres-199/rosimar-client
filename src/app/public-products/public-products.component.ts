@@ -1,7 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatAccordion } from '@angular/material/expansion';
 import { MatSelectionList } from '@angular/material/list';
 import { ActivatedRoute, Router } from '@angular/router';
+import {
+  fromEvent,
+  Subscription,
+} from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { CategoriesService } from '../categories/categories.service';
 import { Category } from '../categories/interfaces/categoria.interface';
 import { ImagesComponent } from '../components/images/images.component';
@@ -18,7 +30,7 @@ import { UsersService } from '../users/users.service';
   templateUrl: './public-products.component.html',
   styleUrls: ['./public-products.component.css'],
 })
-export class PublicProductsComponent implements OnInit {
+export class PublicProductsComponent implements OnInit, OnDestroy {
   itemsPerPage = 28;
   actualPage = 1;
   categoryId?: any;
@@ -35,10 +47,17 @@ export class PublicProductsComponent implements OnInit {
   isLogedIn = false;
   loading = false;
 
+  showFilter: boolean
+
   @ViewChild('categoryList') categoryList?: MatSelectionList;
   @ViewChild('brandList') brandList?: MatSelectionList;
   @ViewChild('weightList') weightList?: MatSelectionList;
-  constructor(
+  @ViewChild('divProducts') divProducts!: ElementRef<HTMLDivElement>
+  @ViewChild('accordionFilter') accordionFilter!: MatAccordion
+
+  private subscription$ = new Subscription()
+
+  constructor (
     private activatedRoute: ActivatedRoute,
     private productsService: ProductsService,
     private categoriesService: CategoriesService,
@@ -47,9 +66,11 @@ export class PublicProductsComponent implements OnInit {
     private dialogRef: MatDialog,
     private userService: UsersService,
     public commonService: CommonService,
-  ) {}
+  ) {
+    this.showFilter = !commonService.isMobile
+  }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.categoryId = this.activatedRoute.snapshot.params.categoryId;
     this.isLogedIn = this.userService.isLogedIn;
     if (this.categoryId === 'offers') this.getOffers();
@@ -58,39 +79,74 @@ export class PublicProductsComponent implements OnInit {
     this.getBrands();
     this.getCategories();
     this.getCategory();
+
+    this.subscription$.add(fromEvent(window, 'resize')
+      .pipe(debounceTime(300))
+      .subscribe({
+        next: () => {
+          this.showFilter = !this.commonService.isMobile
+        }
+      }))
   }
 
-  onSelectCategory() {
+  onSelectCategory () {
     if (this.categoryList) {
       const selectedOptions = this.categoryList.options.filter(
         (option) => option.selected
       );
       this.filter.category = selectedOptions.map((op) => op.value.id);
       this.getProductsFiltered();
+
+      if (this.commonService.isMobile) {
+        this.accordionFilter.closeAll()
+        this.showFilter = false
+      }
+
+      if (this.divProducts) {
+        this.divProducts.nativeElement.scrollIntoView()
+      }
     }
   }
 
-  onSelectBrand() {
+  onSelectBrand () {
     if (this.brandList) {
       const selectedOptions = this.brandList.options.filter(
         (option) => option.selected
       );
       this.filter.brand = selectedOptions.map((op) => op.value.id);
       this.getProductsFiltered();
+
+      if (this.commonService.isMobile) {
+        this.accordionFilter.closeAll()
+        this.showFilter = false
+      }
+
+      if (this.divProducts) {
+        this.divProducts.nativeElement.scrollIntoView()
+      }
     }
   }
 
-  onSelectWeight() {
+  onSelectWeight () {
     if (this.weightList) {
       const selectedOptions = this.weightList.options.filter(
         (option) => option.selected
       );
       this.filter.weight = selectedOptions.map((op) => op.value);
       this.getProductsFiltered();
+
+      if (this.commonService.isMobile) {
+        this.accordionFilter.closeAll()
+        this.showFilter = false
+      }
+
+      if (this.divProducts) {
+        this.divProducts.nativeElement.scrollIntoView()
+      }
     }
   }
 
-  private getCategory() {
+  private getCategory () {
     if (this.categoryId === 'offers') {
       this.category = { name: 'Ofertas', images: [{}] };
       this.imageService.findOne('offers').subscribe({
@@ -113,7 +169,7 @@ export class PublicProductsComponent implements OnInit {
     });
   }
 
-  private getCategories() {
+  private getCategories () {
     this.categoriesService
       .getSubCategories(this.categoryId as number)
       .subscribe({
@@ -123,7 +179,7 @@ export class PublicProductsComponent implements OnInit {
       });
   }
 
-  private getBrands() {
+  private getBrands () {
     if (this.categoryId === 'offers') return;
     this.productsService
       .getBrandsByCategory(this.categoryId as number)
@@ -134,7 +190,7 @@ export class PublicProductsComponent implements OnInit {
       });
   }
 
-  private getOffers() {
+  private getOffers () {
     this.productsService.offers$.subscribe({
       next: (products) => {
         this.products = products;
@@ -142,7 +198,7 @@ export class PublicProductsComponent implements OnInit {
     });
   }
 
-  private getProductsFiltered() {
+  private getProductsFiltered () {
     if (
       !this.filter.brand?.length &&
       !this.filter.category?.length &&
@@ -160,7 +216,7 @@ export class PublicProductsComponent implements OnInit {
       });
   }
 
-  private getProducts() {
+  private getProducts () {
     this.productsService
       .getProductsByCategory(this.categoryId as number)
       .subscribe({
@@ -171,7 +227,7 @@ export class PublicProductsComponent implements OnInit {
       });
   }
 
-  private createFilters() {
+  private createFilters () {
     if (this.products) {
       this.products.forEach((product) => {
         const found = this.weights.find(
@@ -195,7 +251,7 @@ export class PublicProductsComponent implements OnInit {
     }
   }
 
-  getImagePath(category?: Category) {
+  getImagePath (category?: Category) {
     let path = '';
     if (category?.images) {
       if (category.images.length && category.images.length > 1) {
@@ -205,11 +261,11 @@ export class PublicProductsComponent implements OnInit {
     return path;
   }
 
-  onClickProduct(product: Product) {
+  onClickProduct (product: Product) {
     this.router.navigate(['product', product.id]);
   }
 
-  onClickAddOfferImage() {
+  onClickAddOfferImage () {
     this.loading = true;
     let imageId: number;
     let images;
@@ -242,8 +298,8 @@ export class PublicProductsComponent implements OnInit {
         const action = !images.length
           ? 'delete'
           : imageId
-          ? 'update'
-          : 'create';
+            ? 'update'
+            : 'create';
 
         this.imageService[action](image).subscribe({
           next: (reponse) => {
@@ -257,8 +313,15 @@ export class PublicProductsComponent implements OnInit {
     });
   }
 
-  onPaginate(page: number) {
-    window.scrollTo(0, 450);
+  onPaginate (page: number) {
+    if (this.divProducts) {
+      this.divProducts.nativeElement.scrollIntoView()
+    }
     this.actualPage = page;
   }
+
+  ngOnDestroy (): void {
+    this.subscription$.unsubscribe()
+  }
+
 }
