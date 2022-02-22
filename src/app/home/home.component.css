@@ -28,6 +28,10 @@
   margin-top: 2em;
 }
 
+.static p {
+  font-size: 18px;
+}
+
 .carousel {
   margin-top: 1em;
   position: relative;
@@ -42,11 +46,19 @@
     width: 150px !important;
     height: 150px !important;
   }
+
+  .static p {
+    font-size: 14px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
   .offers mat-card {
     width: 200px !important;
     height: 200px !important;
+  }
+
+  .static p {
+    font-size: 16px;
   }
 }

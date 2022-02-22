@@ -1,16 +1,25 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-12 px-0">
+    <div *ngIf="!commonService.isMobile" class="col-12 px-0">
       <div
-        style="width: calc(100% + 4em); min-height: 370px; position: relative"
+        style="position: relative"
+        [ngStyle]="{
+          width: commonService.isTablet ? '100%' : 'calc(100% + 4em)',
+          'min-height': commonService.isTablet ? '210px' : '370px'
+        }"
         *ngIf="category && product"
       >
         <div
-          style="background-image: url('{{getImagePath(category)}}'); background-position: center"
           class="category"
           [ngClass]="{ brightness: !getImagePath(category) }"
+          [ngStyle]="{
+            'min-height': commonService.isTablet ? '210px' : '370px',
+            'background-image': 'url(' + getImagePath(category) + ')',
+            'background-position': 'center'
+          }"
         ></div>
         <div
+          class="title_header"
           style="position: absolute; top: 45%; width: 100%; text-align: center"
         >
           <h1 style="color: #ffffff; font-size: 48px; font-weight: 700">
@@ -41,7 +50,10 @@
               }"
             >
               <img
-                style="width: 257px; height: 388px"
+                [ngStyle]="{
+                  width: commonService.isMobile ? 'auto' : '257px',
+                  height: commonService.isMobile ? '250px' : '388px'
+                }"
                 [src]="product.images[0].path"
               />
             </mat-card>
@@ -49,9 +61,10 @@
 
           <div
             class="col-12 col-md-6 col-lg-8"
-            [ngClass]="{ 'pt-5': commonService.isMobile }"
+            [ngClass]="{ 'pt-3': commonService.isMobile }"
           >
             <div
+              class="description_product"
               style="display: flex; flex-direction: column; margin-left: 3em"
               [ngStyle]="{
                 'max-width': commonService.isTablet ? '100%' : '76%',
@@ -64,11 +77,20 @@
                 </span>
               </h1>
 
-              <p style="font-size: 18px; font-weight: 400; margin-top: 2em">
+              <p
+                style="font-size: 18px; font-weight: 400"
+                [ngStyle]="{
+                  'margin-top': commonService.isMobile ? '0' : '2em'
+                }"
+              >
                 {{ product.description }}
               </p>
               <mat-divider style="margin-top: 3em"></mat-divider>
-              <div style="margin-top: 2em" class="d-flex flex-wrap">
+              <div
+                style="margin-top: 2em"
+                class="d-flex flex-wrap"
+                [ngClass]="{ 'flex-column': commonService.isMobile }"
+              >
                 <div class="d-flex align-items-center">
                   <img
                     src="assets/img/wpp.svg"

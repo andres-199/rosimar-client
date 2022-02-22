@@ -1,6 +1,5 @@
 .category {
   width: 100%;
-  min-height: 370px;
   background-color: #979c44;
   margin-bottom: 1em;
   background-size: cover;
@@ -14,4 +13,18 @@
 .product-container {
   display: flex;
   padding: 4em;
+}
+
+@media (max-width: 768px) {
+  .title_header h1,
+  .description_product h1 span {
+    font-size: 28px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .title_header h1,
+  .description_product h1 span {
+    font-size: 38px !important;
+  }
 }

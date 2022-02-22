@@ -113,13 +113,11 @@
             </mat-card-content>
           </mat-card>
           <mat-card
-            *ngIf="!commonService.isMobile"
-            style="
-              border-radius: 0;
-              width: 50%;
-              min-height: 500px;
-              background-color: #f8b323;
-            "
+            style="border-radius: 0; background-color: #f8b323"
+            [ngStyle]="{
+              width: commonService.isMobile ? '100%' : '50%',
+              'min-height': commonService.isMobile ? '300px' : '300px'
+            }"
           >
           </mat-card>
         </div>
